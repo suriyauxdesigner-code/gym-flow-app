@@ -5,6 +5,12 @@ import { Bell, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import NotificationsPanel from "@/components/notifications/NotificationsPanel";
 
 const PAGE_TITLES: Record<string, { title: string; subtitle: string }> = {
   "/trainer/dashboard": {
@@ -31,15 +37,14 @@ const PAGE_TITLES: Record<string, { title: string; subtitle: string }> = {
     title: "Messages",
     subtitle: "Communicate with your clients",
   },
-  "/trainer/notifications": {
-    title: "Notifications",
-    subtitle: "Stay updated with alerts and updates",
-  },
   "/trainer/profile": {
     title: "Profile",
     subtitle: "Manage your personal information",
   },
 };
+
+// Static initial unread count — matches MOCK_NOTIFICATIONS unread items
+const INITIAL_UNREAD = 5;
 
 export default function TrainerHeader() {
   const pathname = usePathname();
@@ -55,20 +60,33 @@ export default function TrainerHeader() {
 
       {/* Right: Actions */}
       <div className="flex items-center gap-2">
-        {/* Notification Bell */}
-        <div className="relative">
-          <Button
-            variant="ghost"
-            size="icon"
-            aria-label="Notifications"
-            className="text-slate-500"
+        {/* Notification Bell → Popover */}
+        <Popover>
+          <PopoverTrigger asChild>
+            <div className="relative">
+              <Button
+                variant="ghost"
+                size="icon"
+                aria-label="Open notifications"
+                className="text-slate-500 hover:text-slate-900"
+              >
+                <Bell className="h-5 w-5" />
+              </Button>
+              {INITIAL_UNREAD > 0 && (
+                <Badge className="pointer-events-none absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-indigo-600 p-0 text-[10px] hover:bg-indigo-600">
+                  {INITIAL_UNREAD}
+                </Badge>
+              )}
+            </div>
+          </PopoverTrigger>
+          <PopoverContent
+            align="end"
+            sideOffset={8}
+            className="w-[380px] p-0"
           >
-            <Bell className="h-5 w-5" />
-          </Button>
-          <Badge className="absolute -right-0.5 -top-0.5 h-4 w-4 items-center justify-center rounded-full p-0 text-[10px]">
-            3
-          </Badge>
-        </div>
+            <NotificationsPanel />
+          </PopoverContent>
+        </Popover>
 
         {/* Trainer Avatar + Name */}
         <button
