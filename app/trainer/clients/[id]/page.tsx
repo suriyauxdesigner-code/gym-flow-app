@@ -42,6 +42,12 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
+import AssignWorkoutDialog, {
+  type WorkoutPlanAssignment,
+} from "@/components/clients/AssignWorkoutDialog";
+import AssignMealPlanDialog, {
+  type MealPlanAssignment,
+} from "@/components/clients/AssignMealPlanDialog";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -733,25 +739,64 @@ function ProgressTab({ client }: { client: ClientDetail }) {
   );
 }
 
-function WorkoutTab({ client }: { client: ClientDetail }) {
-  const [assignOpen, setAssignOpen] = useState(false);
-  const [planName, setPlanName] = useState("");
+function WorkoutTab({
+  client,
+  assignedPlan,
+  onAssignNew,
+}: {
+  client: ClientDetail;
+  assignedPlan: WorkoutPlanAssignment | null;
+  onAssignNew: () => void;
+}) {
+  const displayName = assignedPlan ? assignedPlan.name : client.workoutPlan.name;
+  const displaySchedule = assignedPlan
+    ? assignedPlan.daysPerWeek.join(" / ")
+    : client.workoutPlan.schedule;
 
   return (
     <div className="space-y-4">
+      {/* Assigned plan success banner */}
+      {assignedPlan && (
+        <div className="flex items-start gap-3 rounded-xl border border-emerald-200 bg-emerald-50 p-4">
+          <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-emerald-600" />
+          <div>
+            <p className="text-sm font-semibold text-emerald-800">
+              New plan assigned: {assignedPlan.name}
+            </p>
+            <p className="mt-0.5 text-xs text-emerald-600">
+              Starts {assignedPlan.startDate} · {assignedPlan.duration} weeks ·{" "}
+              {assignedPlan.daysPerWeek.join(", ")}
+            </p>
+            {assignedPlan.notes && (
+              <p className="mt-1 text-xs italic text-emerald-600">
+                {assignedPlan.notes}
+              </p>
+            )}
+          </div>
+        </div>
+      )}
+
       <Card>
         <CardHeader className="pb-3">
           <div className="flex items-center justify-between">
             <div>
-              <CardTitle className="text-sm font-semibold text-slate-900">Current Workout Plan</CardTitle>
-              <p className="mt-0.5 text-xs text-slate-500">Schedule: {client.workoutPlan.schedule}</p>
+              <CardTitle className="text-sm font-semibold text-slate-900">
+                Current Workout Plan
+              </CardTitle>
+              <p className="mt-0.5 text-xs text-slate-500">
+                Schedule: {displaySchedule}
+              </p>
             </div>
             <div className="flex items-center gap-2">
               <Button variant="outline" size="sm" className="gap-1.5 text-xs">
                 <ClipboardEdit className="h-3.5 w-3.5" />
                 Edit
               </Button>
-              <Button size="sm" onClick={() => setAssignOpen(true)} className="gap-1.5 text-xs">
+              <Button
+                size="sm"
+                onClick={onAssignNew}
+                className="gap-1.5 text-xs"
+              >
                 <Plus className="h-3.5 w-3.5" />
                 Assign New Plan
               </Button>
@@ -761,14 +806,24 @@ function WorkoutTab({ client }: { client: ClientDetail }) {
         <CardContent className="space-y-4">
           <div className="flex items-center gap-2">
             <span className="rounded-full bg-indigo-50 px-3 py-1 text-sm font-semibold text-indigo-700">
-              {client.workoutPlan.name}
+              {displayName}
             </span>
+            {assignedPlan && (
+              <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700">
+                Recently Assigned
+              </span>
+            )}
           </div>
           <div>
-            <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-slate-400">Exercises</p>
+            <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-slate-400">
+              Exercises
+            </p>
             <ul className="space-y-2">
               {client.workoutPlan.exercises.map((ex, i) => (
-                <li key={i} className="flex items-center gap-3 rounded-lg bg-slate-50 px-4 py-2.5">
+                <li
+                  key={i}
+                  className="flex items-center gap-3 rounded-lg bg-slate-50 px-4 py-2.5"
+                >
                   <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-indigo-100 text-xs font-bold text-indigo-600">
                     {i + 1}
                   </div>
@@ -779,108 +834,154 @@ function WorkoutTab({ client }: { client: ClientDetail }) {
           </div>
         </CardContent>
       </Card>
-
-      <Dialog open={assignOpen} onOpenChange={setAssignOpen}>
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle>Assign New Workout Plan</DialogTitle>
-            <DialogDescription>Select or create a plan for {client.name}.</DialogDescription>
-          </DialogHeader>
-          <div className="space-y-3 py-2">
-            <div className="space-y-1.5">
-              <Label htmlFor="wplan">Plan Name</Label>
-              <Input
-                id="wplan"
-                placeholder="e.g. Strength Phase 2"
-                value={planName}
-                onChange={(e) => setPlanName(e.target.value)}
-              />
-            </div>
-            <div className="space-y-1.5">
-              <Label>Quick Select</Label>
-              <div className="flex flex-wrap gap-2">
-                {["Beginner Full Body", "PPL Split", "Upper/Lower", "5/3/1 Program"].map((p) => (
-                  <button
-                    key={p}
-                    type="button"
-                    onClick={() => setPlanName(p)}
-                    className={cn(
-                      "rounded-full border px-3 py-1 text-xs font-medium transition-colors",
-                      planName === p
-                        ? "border-indigo-500 bg-indigo-50 text-indigo-700"
-                        : "border-slate-200 bg-white text-slate-600 hover:bg-slate-50"
-                    )}
-                  >
-                    {p}
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
-          <DialogFooter className="gap-2">
-            <DialogClose asChild>
-              <Button variant="outline">Cancel</Button>
-            </DialogClose>
-            <Button onClick={() => setAssignOpen(false)} disabled={!planName}>
-              Assign Plan
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
     </div>
   );
 }
 
-function MealTab({ client }: { client: ClientDetail }) {
+function MealTab({
+  client,
+  assignedMeal,
+  onAssignMealPlan,
+}: {
+  client: ClientDetail;
+  assignedMeal: MealPlanAssignment | null;
+  onAssignMealPlan: () => void;
+}) {
+  const planName = assignedMeal ? assignedMeal.type : client.mealPlan.name;
+  const calories = assignedMeal ? assignedMeal.calories : client.mealPlan.calories;
+  const protein = assignedMeal ? assignedMeal.protein : client.mealPlan.protein;
+  const carbs = assignedMeal ? assignedMeal.carbs : client.mealPlan.carbs;
+  const fat = assignedMeal ? assignedMeal.fats : client.mealPlan.fat;
+
   const macros = [
-    { label: "Protein", value: client.mealPlan.protein, unit: "g", color: "bg-indigo-500", total: 250 },
-    { label: "Carbs", value: client.mealPlan.carbs, unit: "g", color: "bg-amber-400", total: 400 },
-    { label: "Fat", value: client.mealPlan.fat, unit: "g", color: "bg-emerald-500", total: 100 },
+    { label: "Protein", value: protein, unit: "g", color: "bg-indigo-500", total: 250 },
+    { label: "Carbs", value: carbs, unit: "g", color: "bg-amber-400", total: 400 },
+    { label: "Fat", value: fat, unit: "g", color: "bg-emerald-500", total: 100 },
   ];
 
-  return (
-    <Card>
-      <CardHeader className="pb-3">
-        <div className="flex items-center justify-between">
-          <div>
-            <CardTitle className="text-sm font-semibold text-slate-900">Current Meal Plan</CardTitle>
-            <p className="mt-0.5 text-xs text-slate-500">{client.mealPlan.name}</p>
-          </div>
-          <Button variant="outline" size="sm" className="gap-1.5 text-xs">
-            <ClipboardEdit className="h-3.5 w-3.5" />
-            Edit Plan
-          </Button>
-        </div>
-      </CardHeader>
-      <CardContent className="space-y-5">
-        {/* Calorie target */}
-        <div className="flex items-center justify-center rounded-2xl bg-indigo-50 py-5">
-          <div className="text-center">
-            <p className="text-4xl font-bold text-indigo-700">{client.mealPlan.calories}</p>
-            <p className="mt-1 text-sm text-indigo-500">Daily Calories (kcal)</p>
-          </div>
-        </div>
+  const mealBreakdown = assignedMeal
+    ? [
+        { label: "Breakfast", emoji: "🌅", value: assignedMeal.breakfast },
+        { label: "Lunch", emoji: "☀️", value: assignedMeal.lunch },
+        { label: "Snack", emoji: "🍎", value: assignedMeal.snack },
+        { label: "Dinner", emoji: "🌙", value: assignedMeal.dinner },
+      ]
+    : null;
 
-        {/* Macros */}
-        <div>
-          <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-slate-400">Daily Macros</p>
-          <div className="grid grid-cols-3 gap-3">
-            {macros.map((m) => (
-              <div key={m.label} className="rounded-xl border border-slate-100 bg-slate-50 p-3 text-center">
-                <p className="text-xl font-bold text-slate-900">{m.value}{m.unit}</p>
-                <p className="mt-0.5 text-xs text-slate-500">{m.label}</p>
-                <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-slate-200">
-                  <div
-                    className={cn("h-full rounded-full", m.color)}
-                    style={{ width: `${Math.min((m.value / m.total) * 100, 100)}%` }}
-                  />
-                </div>
-              </div>
-            ))}
+  return (
+    <div className="space-y-4">
+      {/* Assigned meal success banner */}
+      {assignedMeal && (
+        <div className="flex items-start gap-3 rounded-xl border border-emerald-200 bg-emerald-50 p-4">
+          <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-emerald-600" />
+          <div>
+            <p className="text-sm font-semibold text-emerald-800">
+              Meal plan assigned: {assignedMeal.type}
+            </p>
+            <p className="mt-0.5 text-xs text-emerald-600">
+              {assignedMeal.calories} kcal · {assignedMeal.protein}g protein ·{" "}
+              {assignedMeal.carbs}g carbs · {assignedMeal.fats}g fats
+            </p>
           </div>
         </div>
-      </CardContent>
-    </Card>
+      )}
+
+      <Card>
+        <CardHeader className="pb-3">
+          <div className="flex items-center justify-between">
+            <div>
+              <CardTitle className="text-sm font-semibold text-slate-900">
+                Current Meal Plan
+              </CardTitle>
+              <p className="mt-0.5 text-xs text-slate-500">{planName}</p>
+            </div>
+            <div className="flex items-center gap-2">
+              <Button variant="outline" size="sm" className="gap-1.5 text-xs">
+                <ClipboardEdit className="h-3.5 w-3.5" />
+                Edit Plan
+              </Button>
+              <Button
+                size="sm"
+                onClick={onAssignMealPlan}
+                className="gap-1.5 text-xs"
+              >
+                <Plus className="h-3.5 w-3.5" />
+                Assign New
+              </Button>
+            </div>
+          </div>
+        </CardHeader>
+        <CardContent className="space-y-5">
+          {/* Calorie target */}
+          <div className="flex items-center justify-center rounded-2xl bg-indigo-50 py-5">
+            <div className="text-center">
+              <p className="text-4xl font-bold text-indigo-700">{calories}</p>
+              <p className="mt-1 text-sm text-indigo-500">Daily Calories (kcal)</p>
+            </div>
+          </div>
+
+          {/* Macros */}
+          <div>
+            <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-slate-400">
+              Daily Macros
+            </p>
+            <div className="grid grid-cols-3 gap-3">
+              {macros.map((m) => (
+                <div
+                  key={m.label}
+                  className="rounded-xl border border-slate-100 bg-slate-50 p-3 text-center"
+                >
+                  <p className="text-xl font-bold text-slate-900">
+                    {m.value}
+                    {m.unit}
+                  </p>
+                  <p className="mt-0.5 text-xs text-slate-500">{m.label}</p>
+                  <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-slate-200">
+                    <div
+                      className={cn("h-full rounded-full", m.color)}
+                      style={{
+                        width: `${Math.min((m.value / m.total) * 100, 100)}%`,
+                      }}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Meal breakdown — shown only when a plan was assigned */}
+          {mealBreakdown && (
+            <div>
+              <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-slate-400">
+                Meal Breakdown
+              </p>
+              <div className="overflow-hidden rounded-xl border border-slate-200 bg-white">
+                {mealBreakdown.map((meal, i) => (
+                  <div
+                    key={meal.label}
+                    className={cn(
+                      "px-4 py-3",
+                      i < mealBreakdown.length - 1 && "border-b border-slate-100"
+                    )}
+                  >
+                    <p className="mb-0.5 text-xs font-semibold text-slate-600">
+                      {meal.emoji} {meal.label}
+                    </p>
+                    <p className="text-sm text-slate-700">
+                      {meal.value || (
+                        <span className="italic text-slate-400">
+                          Not specified
+                        </span>
+                      )}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+    </div>
   );
 }
 
@@ -959,6 +1060,10 @@ export default function ClientDetailPage({ params }: { params: Promise<{ id: str
 
   const [logOpen, setLogOpen] = useState(false);
   const [logForm, setLogForm] = useState<ProgressFormState>({ weight: "", bodyFat: "", pr: "", notes: "" });
+  const [workoutDialogOpen, setWorkoutDialogOpen] = useState(false);
+  const [mealDialogOpen, setMealDialogOpen] = useState(false);
+  const [assignedWorkout, setAssignedWorkout] = useState<WorkoutPlanAssignment | null>(null);
+  const [assignedMeal, setAssignedMeal] = useState<MealPlanAssignment | null>(null);
 
   function handleQuickLog() {
     setLogOpen(false);
@@ -1016,11 +1121,20 @@ export default function ClientDetailPage({ params }: { params: Promise<{ id: str
                 <ClipboardEdit className="h-3.5 w-3.5" />
                 Log Progress
               </Button>
-              <Button variant="outline" size="sm" className="gap-1.5 text-xs">
+              <Button
+                size="sm"
+                onClick={() => setWorkoutDialogOpen(true)}
+                className="gap-1.5 bg-indigo-600 text-xs text-white hover:bg-indigo-700"
+              >
                 <Dumbbell className="h-3.5 w-3.5" />
                 Assign Workout
               </Button>
-              <Button variant="outline" size="sm" className="gap-1.5 text-xs">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setMealDialogOpen(true)}
+                className="gap-1.5 text-xs"
+              >
                 <Salad className="h-3.5 w-3.5" />
                 Assign Meal Plan
               </Button>
@@ -1048,17 +1162,41 @@ export default function ClientDetailPage({ params }: { params: Promise<{ id: str
         </TabsContent>
 
         <TabsContent value="workout">
-          <WorkoutTab client={client} />
+          <WorkoutTab
+            client={client}
+            assignedPlan={assignedWorkout}
+            onAssignNew={() => setWorkoutDialogOpen(true)}
+          />
         </TabsContent>
 
         <TabsContent value="meal">
-          <MealTab client={client} />
+          <MealTab
+            client={client}
+            assignedMeal={assignedMeal}
+            onAssignMealPlan={() => setMealDialogOpen(true)}
+          />
         </TabsContent>
 
         <TabsContent value="notes">
           <NotesTab client={client} />
         </TabsContent>
       </Tabs>
+
+      {/* ── Assign Workout Dialog ── */}
+      <AssignWorkoutDialog
+        open={workoutDialogOpen}
+        onOpenChange={setWorkoutDialogOpen}
+        clientName={client.name}
+        onAssign={setAssignedWorkout}
+      />
+
+      {/* ── Assign Meal Plan Dialog ── */}
+      <AssignMealPlanDialog
+        open={mealDialogOpen}
+        onOpenChange={setMealDialogOpen}
+        clientName={client.name}
+        onAssign={setAssignedMeal}
+      />
 
       {/* ── Quick Log Progress Dialog (header button) ── */}
       <Dialog open={logOpen} onOpenChange={setLogOpen}>
