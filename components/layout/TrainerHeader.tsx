@@ -31,9 +31,13 @@ const PAGE_TITLES: Record<string, { title: string; subtitle: string }> = {
     title: "Messages",
     subtitle: "Communicate with your clients",
   },
+  "/trainer/notifications": {
+    title: "Notifications",
+    subtitle: "Stay updated with alerts and updates",
+  },
   "/trainer/profile": {
     title: "Profile",
-    subtitle: "Manage your trainer profile",
+    subtitle: "Manage your personal information",
   },
 };
 

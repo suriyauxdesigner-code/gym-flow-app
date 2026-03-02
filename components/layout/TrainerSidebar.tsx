@@ -9,6 +9,7 @@ import {
   ClipboardList,
   Calendar,
   MessageSquare,
+  Bell,
   UserCircle,
   Zap,
 } from "lucide-react";
@@ -27,6 +28,7 @@ const navItems: NavItem[] = [
   { label: "Progress Logs", href: "/trainer/progress", icon: ClipboardList },
   { label: "Availability", href: "/trainer/availability", icon: Calendar },
   { label: "Messages", href: "/trainer/messages", icon: MessageSquare },
+  { label: "Notifications", href: "/trainer/notifications", icon: Bell },
   { label: "Profile", href: "/trainer/profile", icon: UserCircle },
 ];
 
