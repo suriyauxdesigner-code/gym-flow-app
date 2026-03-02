@@ -34,20 +34,20 @@ export default function TrainerSidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="fixed left-0 top-0 z-40 flex h-screen w-[260px] flex-col border-r border-slate-200 bg-white">
+    <aside className="fixed left-0 top-0 z-40 flex h-screen w-[260px] flex-col border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
       {/* Logo */}
-      <div className="flex h-16 items-center gap-2.5 border-b border-slate-100 px-6">
+      <div className="flex h-16 items-center gap-2.5 border-b border-slate-100 dark:border-slate-800 px-6">
         <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-600">
           <Zap className="h-4 w-4 text-white" />
         </div>
-        <span className="text-lg font-bold tracking-tight text-slate-900">
+        <span className="text-lg font-bold tracking-tight text-slate-900 dark:text-slate-100">
           FitPro
         </span>
       </div>
 
       {/* Navigation */}
       <nav className="flex flex-1 flex-col gap-1 overflow-y-auto px-3 py-4">
-        <p className="mb-2 px-3 text-[10px] font-semibold uppercase tracking-widest text-slate-400">
+        <p className="mb-2 px-3 text-[10px] font-semibold uppercase tracking-widest text-slate-400 dark:text-slate-500">
           Menu
         </p>
         {navItems.map((item) => {
@@ -60,13 +60,15 @@ export default function TrainerSidebar() {
                 "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors",
                 isActive
                   ? "bg-indigo-600 text-white shadow-sm"
-                  : "text-slate-600 hover:bg-indigo-50 hover:text-indigo-700"
+                  : "text-slate-600 dark:text-slate-400 hover:bg-indigo-50 dark:hover:bg-indigo-950/60 hover:text-indigo-700 dark:hover:text-indigo-300"
               )}
             >
               <item.icon
                 className={cn(
                   "h-[18px] w-[18px] shrink-0",
-                  isActive ? "text-white" : "text-slate-500"
+                  isActive
+                    ? "text-white"
+                    : "text-slate-500 dark:text-slate-500 group-hover:text-indigo-600"
                 )}
               />
               {item.label}
@@ -76,16 +78,18 @@ export default function TrainerSidebar() {
       </nav>
 
       {/* Bottom section */}
-      <div className="border-t border-slate-100 px-4 py-4">
-        <div className="flex items-center gap-3 rounded-xl bg-indigo-50 px-3 py-3">
+      <div className="border-t border-slate-100 dark:border-slate-800 px-4 py-4">
+        <div className="flex items-center gap-3 rounded-xl bg-indigo-50 dark:bg-indigo-950/50 px-3 py-3">
           <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-indigo-600 text-xs font-bold text-white">
             AT
           </div>
           <div className="min-w-0">
-            <p className="truncate text-sm font-semibold text-slate-900">
+            <p className="truncate text-sm font-semibold text-slate-900 dark:text-slate-100">
               Alex Thompson
             </p>
-            <p className="truncate text-xs text-slate-500">Senior Trainer</p>
+            <p className="truncate text-xs text-slate-500 dark:text-slate-400">
+              Senior Trainer
+            </p>
           </div>
         </div>
       </div>

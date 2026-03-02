@@ -13,6 +13,7 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import ProfileForm from "@/components/profile/ProfileForm";
 import SecurityCard from "@/components/profile/SecurityCard";
+import ThemeToggle from "@/components/theme/ThemeToggle";
 import { MOCK_PROFILE, type TrainerProfile } from "@/lib/profile-data";
 
 export default function ProfilePage() {
@@ -23,7 +24,6 @@ export default function ProfilePage() {
   // Account settings (local UI state only)
   const [emailNotifs, setEmailNotifs] = useState(true);
   const [pushNotifs, setPushNotifs] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
 
   function handleProfileChange(next: TrainerProfile) {
     setProfile(next);
@@ -46,8 +46,10 @@ export default function ProfilePage() {
       {/* ── Page Header ── */}
       <div className="flex items-start justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Profile</h1>
-          <p className="mt-0.5 text-sm text-slate-500">
+          <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100">
+            Profile
+          </h1>
+          <p className="mt-0.5 text-sm text-slate-500 dark:text-slate-400">
             Manage your personal information
           </p>
         </div>
@@ -82,18 +84,18 @@ export default function ProfilePage() {
       {/* ── Section 2: Account Settings ── */}
       <Card className="rounded-2xl shadow-sm">
         <CardHeader className="pb-2">
-          <CardTitle className="text-base font-semibold text-slate-900">
+          <CardTitle className="text-base font-semibold text-slate-900 dark:text-slate-100">
             Account Settings
           </CardTitle>
         </CardHeader>
-        <CardContent className="flex flex-col divide-y divide-slate-100">
+        <CardContent className="flex flex-col divide-y divide-slate-100 dark:divide-slate-800">
           {/* Email Notifications */}
           <div className="flex items-center justify-between py-4 first:pt-0">
             <div>
-              <Label className="text-sm font-medium text-slate-900">
+              <Label className="text-sm font-medium text-slate-900 dark:text-slate-100">
                 Email Notifications
               </Label>
-              <p className="mt-0.5 text-xs text-slate-400">
+              <p className="mt-0.5 text-xs text-slate-400 dark:text-slate-500">
                 Receive updates and session alerts via email
               </p>
             </div>
@@ -107,10 +109,10 @@ export default function ProfilePage() {
           {/* Push Notifications */}
           <div className="flex items-center justify-between py-4">
             <div>
-              <Label className="text-sm font-medium text-slate-900">
+              <Label className="text-sm font-medium text-slate-900 dark:text-slate-100">
                 Push Notifications
               </Label>
-              <p className="mt-0.5 text-xs text-slate-400">
+              <p className="mt-0.5 text-xs text-slate-400 dark:text-slate-500">
                 Get real-time alerts directly on your device
               </p>
             </div>
@@ -121,21 +123,17 @@ export default function ProfilePage() {
             />
           </div>
 
-          {/* Dark Mode */}
+          {/* Dark Mode — uses real ThemeToggle */}
           <div className="flex items-center justify-between py-4 last:pb-0">
             <div>
-              <Label className="text-sm font-medium text-slate-900">
+              <Label className="text-sm font-medium text-slate-900 dark:text-slate-100">
                 Dark Mode
               </Label>
-              <p className="mt-0.5 text-xs text-slate-400">
-                Switch to a darker interface theme (UI only)
+              <p className="mt-0.5 text-xs text-slate-400 dark:text-slate-500">
+                Toggle between light and dark interface theme
               </p>
             </div>
-            <Switch
-              checked={darkMode}
-              onCheckedChange={setDarkMode}
-              aria-label="Dark mode"
-            />
+            <ThemeToggle />
           </div>
         </CardContent>
       </Card>

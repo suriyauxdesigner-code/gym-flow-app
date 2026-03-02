@@ -51,11 +51,15 @@ export default function TrainerHeader() {
   const page = PAGE_TITLES[pathname] ?? { title: "FitPro", subtitle: "" };
 
   return (
-    <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-slate-200 bg-white px-6 shadow-sm">
+    <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-6 shadow-sm">
       {/* Left: Page Title */}
       <div>
-        <h1 className="text-xl font-bold text-slate-900">{page.title}</h1>
-        <p className="text-xs text-slate-500">{page.subtitle}</p>
+        <h1 className="text-xl font-bold text-slate-900 dark:text-slate-100">
+          {page.title}
+        </h1>
+        <p className="text-xs text-slate-500 dark:text-slate-400">
+          {page.subtitle}
+        </p>
       </div>
 
       {/* Right: Actions */}
@@ -68,7 +72,7 @@ export default function TrainerHeader() {
                 variant="ghost"
                 size="icon"
                 aria-label="Open notifications"
-                className="text-slate-500 hover:text-slate-900"
+                className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100"
               >
                 <Bell className="h-5 w-5" />
               </Button>
@@ -92,18 +96,20 @@ export default function TrainerHeader() {
         <button
           type="button"
           aria-label="Trainer menu"
-          className="flex items-center gap-2.5 rounded-xl px-3 py-1.5 transition-colors hover:bg-slate-100"
+          className="flex items-center gap-2.5 rounded-xl px-3 py-1.5 transition-colors hover:bg-slate-100 dark:hover:bg-slate-800"
         >
           <Avatar className="h-8 w-8">
             <AvatarFallback className="text-xs">AT</AvatarFallback>
           </Avatar>
           <div className="hidden text-left sm:block">
-            <p className="text-sm font-semibold text-slate-900">
+            <p className="text-sm font-semibold text-slate-900 dark:text-slate-100">
               Alex Thompson
             </p>
-            <p className="text-xs text-slate-500">Senior Trainer</p>
+            <p className="text-xs text-slate-500 dark:text-slate-400">
+              Senior Trainer
+            </p>
           </div>
-          <ChevronDown className="h-4 w-4 text-slate-400" />
+          <ChevronDown className="h-4 w-4 text-slate-400 dark:text-slate-500" />
         </button>
       </div>
     </header>

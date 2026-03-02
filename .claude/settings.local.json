@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(npx tsc --noEmit)",
-      "Bash(npm install @radix-ui/react-popover)"
+      "Bash(npm install @radix-ui/react-popover)",
+      "Bash(npm install next-themes)"
     ]
   }
 }

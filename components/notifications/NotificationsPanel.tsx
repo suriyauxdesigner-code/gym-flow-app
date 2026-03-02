@@ -25,26 +25,26 @@ type TabValue = "all" | "unread" | "class" | "client" | "message" | "system";
 const TYPE_CONFIG = {
   class: {
     icon: Dumbbell,
-    iconBg: "bg-indigo-100",
-    iconColor: "text-indigo-600",
+    iconBg: "bg-indigo-100 dark:bg-indigo-950",
+    iconColor: "text-indigo-600 dark:text-indigo-400",
     actionHref: "/trainer/classes",
   },
   client: {
     icon: Users,
-    iconBg: "bg-emerald-100",
-    iconColor: "text-emerald-600",
+    iconBg: "bg-emerald-100 dark:bg-emerald-950",
+    iconColor: "text-emerald-600 dark:text-emerald-400",
     actionHref: "/trainer/clients",
   },
   message: {
     icon: MessageSquare,
-    iconBg: "bg-sky-100",
-    iconColor: "text-sky-600",
+    iconBg: "bg-sky-100 dark:bg-sky-950",
+    iconColor: "text-sky-600 dark:text-sky-400",
     actionHref: "/trainer/messages",
   },
   system: {
     icon: Settings,
-    iconBg: "bg-slate-100",
-    iconColor: "text-slate-500",
+    iconBg: "bg-slate-100 dark:bg-slate-800",
+    iconColor: "text-slate-500 dark:text-slate-400",
     actionHref: null,
   },
 } as const;
@@ -88,7 +88,7 @@ export default function NotificationsPanel() {
       {/* ── Panel Header ── */}
       <div className="flex items-center justify-between px-4 pb-3 pt-4">
         <div className="flex items-center gap-2">
-          <h3 className="text-sm font-semibold text-slate-900">
+          <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-100">
             Notifications
           </h3>
           {unreadCount > 0 && (
@@ -102,19 +102,19 @@ export default function NotificationsPanel() {
           size="sm"
           onClick={markAllRead}
           disabled={unreadCount === 0}
-          className="h-7 text-xs text-slate-500 hover:text-indigo-600"
+          className="h-7 text-xs text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400"
         >
           Mark all as read
         </Button>
       </div>
 
       {/* ── Filter Tabs ── */}
-      <div className="border-b border-slate-100 px-4 pb-3">
+      <div className="border-b border-slate-100 dark:border-slate-800 px-4 pb-3">
         <Tabs
           value={activeTab}
           onValueChange={(v) => setActiveTab(v as TabValue)}
         >
-          <TabsList className="h-7 gap-0.5 bg-slate-100 p-0.5">
+          <TabsList className="h-7 gap-0.5 bg-slate-100 dark:bg-slate-800 p-0.5">
             <TabsTrigger value="all" className="h-6 px-2 text-[11px]">
               All
             </TabsTrigger>
@@ -143,20 +143,20 @@ export default function NotificationsPanel() {
       <ScrollArea className="h-[420px]">
         {filtered.length === 0 ? (
           <div className="flex flex-col items-center justify-center gap-3 py-12">
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-slate-100">
-              <Bell className="h-5 w-5 text-slate-300" />
+            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800">
+              <Bell className="h-5 w-5 text-slate-300 dark:text-slate-600" />
             </div>
             <div className="text-center">
-              <p className="text-sm font-semibold text-slate-700">
+              <p className="text-sm font-semibold text-slate-700 dark:text-slate-300">
                 All caught up!
               </p>
-              <p className="mt-0.5 text-xs text-slate-400">
+              <p className="mt-0.5 text-xs text-slate-400 dark:text-slate-500">
                 No notifications here.
               </p>
             </div>
           </div>
         ) : (
-          <div className="divide-y divide-slate-100">
+          <div className="divide-y divide-slate-100 dark:divide-slate-800">
             {filtered.map((notif) => {
               const config = TYPE_CONFIG[notif.type];
               const Icon = config.icon;
@@ -169,8 +169,8 @@ export default function NotificationsPanel() {
                   className={cn(
                     "relative flex w-full items-start gap-3 px-4 py-3.5 text-left transition-colors",
                     notif.read
-                      ? "bg-white hover:bg-slate-50"
-                      : "border-l-[3px] border-indigo-600 bg-indigo-50 hover:bg-indigo-100/60"
+                      ? "bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800/60"
+                      : "border-l-[3px] border-indigo-600 bg-indigo-50 dark:bg-indigo-950/40 hover:bg-indigo-100/60 dark:hover:bg-indigo-950/60"
                   )}
                 >
                   {/* Unread dot */}
@@ -195,24 +195,24 @@ export default function NotificationsPanel() {
                         className={cn(
                           "truncate text-xs",
                           notif.read
-                            ? "font-medium text-slate-700"
-                            : "font-semibold text-slate-900"
+                            ? "font-medium text-slate-700 dark:text-slate-300"
+                            : "font-semibold text-slate-900 dark:text-slate-100"
                         )}
                       >
                         {notif.title}
                       </p>
-                      <span className="flex-shrink-0 text-[10px] text-slate-400">
+                      <span className="flex-shrink-0 text-[10px] text-slate-400 dark:text-slate-500">
                         {formatNotifTime(notif.timestamp)}
                       </span>
                     </div>
-                    <p className="mt-0.5 text-[11px] leading-relaxed text-slate-500">
+                    <p className="mt-0.5 text-[11px] leading-relaxed text-slate-500 dark:text-slate-400">
                       {notif.description}
                     </p>
                     {config.actionHref && (
                       <Link
                         href={config.actionHref}
                         onClick={(e) => e.stopPropagation()}
-                        className="mt-1 inline-block text-[11px] font-medium text-indigo-600 hover:text-indigo-700"
+                        className="mt-1 inline-block text-[11px] font-medium text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300"
                       >
                         View →
                       </Link>
