@@ -13,7 +13,6 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import ProfileForm from "@/components/profile/ProfileForm";
 import SecurityCard from "@/components/profile/SecurityCard";
-import ThemeToggle from "@/components/theme/ThemeToggle";
 import { MOCK_PROFILE, type TrainerProfile } from "@/lib/profile-data";
 
 export default function ProfilePage() {
@@ -107,7 +106,7 @@ export default function ProfilePage() {
           </div>
 
           {/* Push Notifications */}
-          <div className="flex items-center justify-between py-4">
+          <div className="flex items-center justify-between py-4 last:pb-0">
             <div>
               <Label className="text-sm font-medium text-slate-900 dark:text-slate-100">
                 Push Notifications
@@ -121,19 +120,6 @@ export default function ProfilePage() {
               onCheckedChange={setPushNotifs}
               aria-label="Push notifications"
             />
-          </div>
-
-          {/* Dark Mode — uses real ThemeToggle */}
-          <div className="flex items-center justify-between py-4 last:pb-0">
-            <div>
-              <Label className="text-sm font-medium text-slate-900 dark:text-slate-100">
-                Dark Mode
-              </Label>
-              <p className="mt-0.5 text-xs text-slate-400 dark:text-slate-500">
-                Toggle between light and dark interface theme
-              </p>
-            </div>
-            <ThemeToggle />
           </div>
         </CardContent>
       </Card>

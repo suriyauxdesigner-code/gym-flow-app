@@ -1,5 +1,4 @@
 {
-  "/_not-found/page": "app/_not-found/page.js",
   "/trainer/dashboard/page": "app/trainer/dashboard/page.js",
   "/trainer/messages/page": "app/trainer/messages/page.js",
   "/trainer/availability/page": "app/trainer/availability/page.js",

@@ -770,6 +770,9 @@ video {
 .mt-5 {
   margin-top: 1.25rem;
 }
+.mr-1 {
+  margin-right: 0.25rem;
+}
 .block {
   display: block;
 }
@@ -1772,6 +1775,9 @@ video {
 .font-semibold {
   font-weight: 600;
 }
+.font-black {
+  font-weight: 900;
+}
 .uppercase {
   text-transform: uppercase;
 }
@@ -2674,6 +2680,9 @@ video {
 }
 .dark\:hover\:bg-indigo-900\/60:hover:is(.dark *) {
   background-color: rgb(49 46 129 / 0.6);
+}
+.dark\:hover\:bg-red-950\/30:hover:is(.dark *) {
+  background-color: rgb(69 10 10 / 0.3);
 }
 .dark\:hover\:text-indigo-300:hover:is(.dark *) {
   --tw-text-opacity: 1;

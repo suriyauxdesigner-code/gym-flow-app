@@ -1,70 +1,49 @@
 "use client";
 
-import { usePathname } from "next/navigation";
-import { Bell, ChevronDown } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { Bell, ChevronDown, User, LogOut, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
 import NotificationsPanel from "@/components/notifications/NotificationsPanel";
-
-const PAGE_TITLES: Record<string, { title: string; subtitle: string }> = {
-  "/trainer/dashboard": {
-    title: "Dashboard",
-    subtitle: "Welcome back, Alex 👋",
-  },
-  "/trainer/clients": {
-    title: "My Clients",
-    subtitle: "Manage and track your assigned clients",
-  },
-  "/trainer/classes": {
-    title: "Classes",
-    subtitle: "Schedule and manage your class sessions",
-  },
-  "/trainer/progress": {
-    title: "Progress Logs",
-    subtitle: "Track client performance over time",
-  },
-  "/trainer/availability": {
-    title: "Availability",
-    subtitle: "Set your working hours and open slots",
-  },
-  "/trainer/messages": {
-    title: "Messages",
-    subtitle: "Communicate with your clients",
-  },
-  "/trainer/profile": {
-    title: "Profile",
-    subtitle: "Manage your personal information",
-  },
-};
+import ThemeToggle from "@/components/theme/ThemeToggle";
 
 // Static initial unread count — matches MOCK_NOTIFICATIONS unread items
 const INITIAL_UNREAD = 5;
 
 export default function TrainerHeader() {
-  const pathname = usePathname();
-  const page = PAGE_TITLES[pathname] ?? { title: "FitPro", subtitle: "" };
+  const router = useRouter();
 
   return (
     <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-6 shadow-sm">
-      {/* Left: Page Title */}
-      <div>
-        <h1 className="text-xl font-bold text-slate-900 dark:text-slate-100">
-          {page.title}
-        </h1>
-        <p className="text-xs text-slate-500 dark:text-slate-400">
-          {page.subtitle}
-        </p>
+      {/* Left: Gym Branding */}
+      <div className="flex items-center gap-3">
+        <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-indigo-600 shrink-0">
+          <span className="text-base font-black text-white">F</span>
+        </div>
+        <div>
+          <p className="text-sm font-bold text-slate-900 dark:text-slate-100 leading-tight">
+            Iron Forge Gym
+          </p>
+          <p className="text-xs text-slate-500 dark:text-slate-400 flex items-center gap-0.5 leading-tight">
+            <MapPin className="h-3 w-3 shrink-0" />
+            San Francisco, CA
+          </p>
+        </div>
       </div>
 
       {/* Right: Actions */}
-      <div className="flex items-center gap-2">
-        {/* Notification Bell → Popover */}
+      <div className="flex items-center gap-1">
+        {/* Theme Toggle */}
+        <ThemeToggle />
+
+        {/* Notification Bell */}
         <Popover>
           <PopoverTrigger asChild>
             <div className="relative">
@@ -83,34 +62,61 @@ export default function TrainerHeader() {
               )}
             </div>
           </PopoverTrigger>
-          <PopoverContent
-            align="end"
-            sideOffset={8}
-            className="w-[380px] p-0"
-          >
+          <PopoverContent align="end" sideOffset={8} className="w-[380px] p-0">
             <NotificationsPanel />
           </PopoverContent>
         </Popover>
 
-        {/* Trainer Avatar + Name */}
-        <button
-          type="button"
-          aria-label="Trainer menu"
-          className="flex items-center gap-2.5 rounded-xl px-3 py-1.5 transition-colors hover:bg-slate-100 dark:hover:bg-slate-800"
-        >
-          <Avatar className="h-8 w-8">
-            <AvatarFallback className="text-xs">AT</AvatarFallback>
-          </Avatar>
-          <div className="hidden text-left sm:block">
-            <p className="text-sm font-semibold text-slate-900 dark:text-slate-100">
-              Alex Thompson
-            </p>
-            <p className="text-xs text-slate-500 dark:text-slate-400">
-              Senior Trainer
-            </p>
-          </div>
-          <ChevronDown className="h-4 w-4 text-slate-400 dark:text-slate-500" />
-        </button>
+        {/* Profile Dropdown */}
+        <Popover>
+          <PopoverTrigger asChild>
+            <button
+              type="button"
+              aria-label="Trainer menu"
+              className="flex items-center gap-2.5 rounded-xl px-3 py-1.5 transition-colors hover:bg-slate-100 dark:hover:bg-slate-800"
+            >
+              <Avatar className="h-8 w-8">
+                <AvatarFallback className="text-xs">AT</AvatarFallback>
+              </Avatar>
+              <div className="hidden text-left sm:block">
+                <p className="text-sm font-semibold text-slate-900 dark:text-slate-100">
+                  Alex Thompson
+                </p>
+                <p className="text-xs text-slate-500 dark:text-slate-400">
+                  Senior Trainer
+                </p>
+              </div>
+              <ChevronDown className="h-4 w-4 text-slate-400 dark:text-slate-500" />
+            </button>
+          </PopoverTrigger>
+          <PopoverContent align="end" sideOffset={8} className="w-48 p-1.5">
+            <div className="px-2 py-1.5 mb-1">
+              <p className="text-xs font-semibold text-slate-900 dark:text-slate-100">
+                Alex Thompson
+              </p>
+              <p className="text-[11px] text-slate-500 dark:text-slate-400">
+                alex@fitpro.com
+              </p>
+            </div>
+            <Separator className="mb-1" />
+            <button
+              type="button"
+              onClick={() => router.push("/trainer/profile")}
+              className="flex w-full items-center gap-2 rounded-lg px-2 py-1.5 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+            >
+              <User className="h-4 w-4" />
+              Profile
+            </button>
+            <button
+              type="button"
+              onClick={() => router.push("/")}
+              className="flex w-full items-center gap-2 rounded-lg px-2 py-1.5 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors"
+            >
+              <LogOut className="h-4 w-4" />
+              Logout
+            </button>
+          </PopoverContent>
+        </Popover>
       </div>
     </header>
   );
