@@ -66,12 +66,12 @@ export default function ClassTabs({ gymClass }: Props) {
 
   return (
     <Tabs defaultValue="roster">
-      <TabsList className="w-full justify-start rounded-none border-b border-slate-200 dark:border-slate-800 bg-transparent p-0 h-auto">
+      <TabsList className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-1 rounded-xl h-auto gap-0.5">
         {["roster", "attendance", "waitlist", "notes"].map((tab) => (
           <TabsTrigger
             key={tab}
             value={tab}
-            className="rounded-none border-b-2 border-transparent px-4 pb-3 pt-1 text-sm font-medium capitalize text-slate-500 dark:text-slate-400 data-[state=active]:border-indigo-600 data-[state=active]:text-indigo-600 data-[state=active]:shadow-none"
+            className="rounded-lg px-4 py-2 text-sm font-medium capitalize data-[state=active]:bg-indigo-600 data-[state=active]:text-white data-[state=active]:shadow-sm"
           >
             {tab.charAt(0).toUpperCase() + tab.slice(1)}
           </TabsTrigger>
@@ -79,7 +79,7 @@ export default function ClassTabs({ gymClass }: Props) {
       </TabsList>
 
       {/* ── Roster ── */}
-      <TabsContent value="roster" className="mt-6">
+      <TabsContent value="roster">
         <Card className="rounded-2xl shadow-sm overflow-hidden">
           <CardHeader className="pb-4 px-6 pt-6">
             <div className="flex items-center justify-between">
@@ -147,7 +147,7 @@ export default function ClassTabs({ gymClass }: Props) {
       </TabsContent>
 
       {/* ── Attendance ── */}
-      <TabsContent value="attendance" className="mt-6">
+      <TabsContent value="attendance">
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-4 mb-6">
           <StatCard label="Booked" value={booked} color="indigo" />
           <StatCard label="Present" value={attended} color="emerald" />
@@ -216,7 +216,7 @@ export default function ClassTabs({ gymClass }: Props) {
       </TabsContent>
 
       {/* ── Waitlist ── */}
-      <TabsContent value="waitlist" className="mt-6">
+      <TabsContent value="waitlist">
         <Card className="rounded-2xl shadow-sm overflow-hidden">
           <CardHeader className="pb-4 px-6 pt-6">
             <div className="flex items-center justify-between">
@@ -275,7 +275,7 @@ export default function ClassTabs({ gymClass }: Props) {
       </TabsContent>
 
       {/* ── Notes ── */}
-      <TabsContent value="notes" className="mt-6">
+      <TabsContent value="notes">
         <Card className="rounded-2xl shadow-sm">
           <CardHeader className="pb-2">
             <CardTitle className="text-base font-semibold text-slate-900 dark:text-slate-100">

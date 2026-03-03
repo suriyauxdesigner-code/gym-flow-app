@@ -57,12 +57,12 @@ export default function TrainerTabs({ trainer }: Props) {
 
   return (
     <Tabs defaultValue="overview">
-      <TabsList className="w-full justify-start rounded-none border-b border-slate-200 dark:border-slate-800 bg-transparent p-0 h-auto">
+      <TabsList className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-1 rounded-xl h-auto gap-0.5">
         {TABS.map((tab) => (
           <TabsTrigger
             key={tab}
             value={tab}
-            className="rounded-none border-b-2 border-transparent px-4 pb-3 pt-1 text-sm font-medium capitalize text-slate-500 dark:text-slate-400 data-[state=active]:border-indigo-600 data-[state=active]:text-indigo-600 data-[state=active]:shadow-none"
+            className="rounded-lg px-4 py-2 text-sm font-medium capitalize data-[state=active]:bg-indigo-600 data-[state=active]:text-white data-[state=active]:shadow-sm"
           >
             {tab.charAt(0).toUpperCase() + tab.slice(1)}
           </TabsTrigger>
@@ -70,7 +70,7 @@ export default function TrainerTabs({ trainer }: Props) {
       </TabsList>
 
       {/* ── Overview ── */}
-      <TabsContent value="overview" className="mt-6">
+      <TabsContent value="overview">
         <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
           {/* Left */}
           <div className="space-y-6">
@@ -157,7 +157,7 @@ export default function TrainerTabs({ trainer }: Props) {
       </TabsContent>
 
       {/* ── Clients ── */}
-      <TabsContent value="clients" className="mt-6">
+      <TabsContent value="clients">
         <Card className="rounded-2xl shadow-sm overflow-hidden">
           <CardHeader className="pb-4 px-6 pt-6">
             <div className="flex items-center justify-between">
@@ -219,7 +219,7 @@ export default function TrainerTabs({ trainer }: Props) {
       </TabsContent>
 
       {/* ── Classes ── */}
-      <TabsContent value="classes" className="mt-6">
+      <TabsContent value="classes">
         <Card className="rounded-2xl shadow-sm overflow-hidden">
           <CardHeader className="pb-4 px-6 pt-6">
             <div className="flex items-center justify-between">
@@ -285,7 +285,7 @@ export default function TrainerTabs({ trainer }: Props) {
       </TabsContent>
 
       {/* ── Performance ── */}
-      <TabsContent value="performance" className="mt-6">
+      <TabsContent value="performance">
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 mb-6">
           <StatCard label="Attendance Rate" value={`${trainer.attendanceRate}%`} />
           <StatCard label="Client Retention" value="87%" />
