@@ -2,10 +2,10 @@
 
 import { useState } from "react";
 import { Plus, Search } from "lucide-react";
-import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import TrainerTable from "@/components/owner/trainers/TrainerTable";
+import AddTrainerDialog from "@/components/owner/trainers/AddTrainerDialog";
 import { MOCK_TRAINERS } from "@/lib/owner-data";
 import type { TrainerAvailabilityStatus } from "@/lib/owner-data";
 import { cn } from "@/lib/utils";
@@ -21,9 +21,9 @@ const STATUS_FILTERS: { label: string; value: FilterStatus }[] = [
 ];
 
 export default function TrainersPage() {
-  const router = useRouter();
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState<FilterStatus>("all");
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   const filtered = MOCK_TRAINERS.filter((t) => {
     const matchesSearch =
@@ -46,7 +46,7 @@ export default function TrainersPage() {
         </div>
         <Button
           className="bg-indigo-600 hover:bg-indigo-700 text-white gap-1.5 shrink-0 self-start sm:self-auto"
-          onClick={() => router.push("/owner/trainers/add")}
+          onClick={() => setDialogOpen(true)}
         >
           <Plus className="h-4 w-4" />
           Add Trainer
@@ -93,6 +93,9 @@ export default function TrainersPage() {
 
       {/* Table */}
       <TrainerTable trainers={filtered} />
+
+      {/* Add Trainer Dialog */}
+      <AddTrainerDialog open={dialogOpen} onOpenChange={setDialogOpen} />
     </div>
   );
 }

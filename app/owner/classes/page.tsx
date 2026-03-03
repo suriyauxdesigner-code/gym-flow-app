@@ -2,10 +2,10 @@
 
 import { useState } from "react";
 import { Plus, Search, LayoutList, Calendar } from "lucide-react";
-import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import ClassTable from "@/components/owner/classes/ClassTable";
+import AddClassDialog from "@/components/owner/classes/AddClassDialog";
 import { MOCK_GYM_CLASSES } from "@/lib/owner-data";
 import type { GymClassStatus } from "@/lib/owner-data";
 import { cn } from "@/lib/utils";
@@ -23,10 +23,10 @@ const STATUS_FILTERS: { label: string; value: FilterStatus }[] = [
 type ViewMode = "list" | "week";
 
 export default function ClassesPage() {
-  const router = useRouter();
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState<FilterStatus>("all");
   const [viewMode, setViewMode] = useState<ViewMode>("list");
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   const filtered = MOCK_GYM_CLASSES.filter((c) => {
     const matchesSearch =
@@ -80,7 +80,7 @@ export default function ClassesPage() {
 
           <Button
             className="bg-indigo-600 hover:bg-indigo-700 text-white gap-1.5"
-            onClick={() => router.push("/owner/classes/add")}
+            onClick={() => setDialogOpen(true)}
           >
             <Plus className="h-4 w-4" />
             Create Class
@@ -134,13 +134,14 @@ export default function ClassesPage() {
         <div className="rounded-2xl border border-dashed border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-sm flex items-center justify-center py-24 text-center">
           <div>
             <Calendar className="h-10 w-10 text-slate-300 dark:text-slate-600 mx-auto mb-3" />
-            <p className="text-sm font-semibold text-slate-700 dark:text-slate-300">
-              Week View
-            </p>
+            <p className="text-sm font-semibold text-slate-700 dark:text-slate-300">Week View</p>
             <p className="text-xs text-slate-400 mt-1">Coming soon</p>
           </div>
         </div>
       )}
+
+      {/* Create Class Dialog */}
+      <AddClassDialog open={dialogOpen} onOpenChange={setDialogOpen} />
     </div>
   );
 }
