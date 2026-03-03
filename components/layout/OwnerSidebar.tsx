@@ -34,8 +34,6 @@ const navItems: NavItem[] = [
 
 // Routes that are placeholder (not yet built)
 const PLACEHOLDER_ROUTES = [
-  "/owner/trainers",
-  "/owner/classes",
   "/owner/payments",
   "/owner/reports",
   "/owner/settings",
