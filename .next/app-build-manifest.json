@@ -6,11 +6,6 @@
       "static/css/app/layout.css",
       "static/chunks/app/layout.js"
     ],
-    "/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/page.js"
-    ],
     "/trainer/layout": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
@@ -26,20 +21,40 @@
       "static/chunks/main-app.js",
       "static/chunks/app/trainer/clients/page.js"
     ],
+    "/trainer/profile/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/trainer/profile/page.js"
+    ],
     "/trainer/classes/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/trainer/classes/page.js"
     ],
-    "/trainer/classes/[id]/page": [
+    "/trainer/messages/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/trainer/classes/[id]/page.js"
+      "static/chunks/app/trainer/messages/page.js"
+    ],
+    "/trainer/availability/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/trainer/availability/page.js"
+    ],
+    "/trainer/progress/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/trainer/progress/page.js"
     ],
     "/trainer/clients/[id]/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/trainer/clients/[id]/page.js"
+    ],
+    "/trainer/classes/[id]/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/trainer/classes/[id]/page.js"
     ]
   }
 }

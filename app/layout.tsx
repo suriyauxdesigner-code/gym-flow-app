@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist } from "next/font/google";
 import { Toaster } from "sonner";
 import { ThemeProvider } from "next-themes";
+import Script from "next/script";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -21,10 +22,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head>
-        {/* eslint-disable-next-line @next/next/no-sync-scripts */}
-        <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
-      </head>
       <body className={`${geistSans.variable} antialiased`}>
         <ThemeProvider
           attribute="class"
@@ -35,6 +32,10 @@ export default function RootLayout({
           {children}
           <Toaster position="bottom-right" richColors closeButton />
         </ThemeProvider>
+        <Script
+          src="https://mcp.figma.com/mcp/html-to-design/capture.js"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );
