@@ -21,7 +21,7 @@ export default function MessageBubble({
             "px-4 py-2.5 text-sm leading-relaxed shadow-sm",
             isTrainer
               ? "rounded-xl rounded-br-sm bg-indigo-600 text-white"
-              : "rounded-xl rounded-bl-sm bg-slate-100 text-slate-900"
+              : "rounded-xl rounded-bl-sm bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-slate-100"
           )}
         >
           {message.content}
@@ -30,7 +30,7 @@ export default function MessageBubble({
         {/* Timestamp + status */}
         <div
           className={cn(
-            "mt-1 flex items-center gap-1 text-[10px] text-slate-400",
+            "mt-1 flex items-center gap-1 text-[10px] text-slate-400 dark:text-slate-500",
             isTrainer ? "flex-row-reverse" : "flex-row"
           )}
         >

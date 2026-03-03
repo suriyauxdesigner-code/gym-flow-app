@@ -56,15 +56,15 @@ export default function ChatWindow({ conversation, onSend }: ChatWindowProps) {
   /* ── Empty State ── */
   if (!conversation) {
     return (
-      <div className="flex flex-1 flex-col items-center justify-center gap-4 bg-slate-50">
-        <div className="flex h-16 w-16 items-center justify-center rounded-full bg-slate-100">
-          <MessageSquare className="h-7 w-7 text-slate-300" />
+      <div className="flex flex-1 flex-col items-center justify-center gap-4 bg-slate-50 dark:bg-slate-950">
+        <div className="flex h-16 w-16 items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800">
+          <MessageSquare className="h-7 w-7 text-slate-300 dark:text-slate-600" />
         </div>
         <div className="text-center">
-          <h3 className="text-base font-semibold text-slate-700">
+          <h3 className="text-base font-semibold text-slate-700 dark:text-slate-200">
             No conversation selected
           </h3>
-          <p className="mt-1 text-sm text-slate-400">
+          <p className="mt-1 text-sm text-slate-400 dark:text-slate-500">
             Choose a conversation from the list to start messaging
           </p>
         </div>
@@ -81,9 +81,9 @@ export default function ChatWindow({ conversation, onSend }: ChatWindowProps) {
     .find((m) => m.sender === "trainer")?.id;
 
   return (
-    <div className="flex flex-1 flex-col bg-slate-50">
+    <div className="flex flex-1 flex-col bg-slate-50 dark:bg-slate-950">
       {/* ── Chat Header ── */}
-      <div className="flex items-center justify-between border-b border-slate-200 bg-white px-6 py-3.5 shadow-sm">
+      <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-6 py-3.5 shadow-sm">
         <div className="flex items-center gap-3">
           {/* Avatar with online indicator */}
           <div className="relative">
@@ -93,13 +93,13 @@ export default function ChatWindow({ conversation, onSend }: ChatWindowProps) {
               </AvatarFallback>
             </Avatar>
             {conversation.isOnline && (
-              <span className="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full bg-emerald-500 ring-2 ring-white" />
+              <span className="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full bg-emerald-500 ring-2 ring-white dark:ring-slate-900" />
             )}
           </div>
 
           {/* Name + status */}
           <div>
-            <p className="text-sm font-semibold text-slate-900">
+            <p className="text-sm font-semibold text-slate-900 dark:text-slate-100">
               {conversation.clientName}
             </p>
             <div className="flex items-center gap-1.5">
@@ -144,13 +144,13 @@ export default function ChatWindow({ conversation, onSend }: ChatWindowProps) {
       </ScrollArea>
 
       {/* ── Message Input ── */}
-      <div className="border-t border-slate-200 bg-white px-4 py-3">
-        <div className="flex items-end gap-2.5 rounded-2xl border border-slate-200 bg-slate-50 px-3 py-2 focus-within:border-indigo-300 focus-within:ring-2 focus-within:ring-indigo-100 transition-all">
+      <div className="border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 py-3">
+        <div className="flex items-end gap-2.5 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-3 py-2 focus-within:border-indigo-300 dark:focus-within:border-indigo-600 focus-within:ring-2 focus-within:ring-indigo-100 dark:focus-within:ring-indigo-900 transition-all">
           {/* Attach icon (UI only) */}
           <button
             type="button"
             aria-label="Attach file"
-            className="mb-1 flex-shrink-0 rounded-lg p-1 text-slate-400 transition-colors hover:bg-slate-200 hover:text-slate-600"
+            className="mb-1 flex-shrink-0 rounded-lg p-1 text-slate-400 transition-colors hover:bg-slate-200 dark:hover:bg-slate-700 hover:text-slate-600 dark:hover:text-slate-300"
           >
             <Paperclip className="h-4 w-4" />
           </button>
@@ -174,16 +174,16 @@ export default function ChatWindow({ conversation, onSend }: ChatWindowProps) {
               "mb-0.5 h-8 w-8 flex-shrink-0 rounded-xl p-0 transition-all",
               input.trim()
                 ? "bg-indigo-600 text-white hover:bg-indigo-700"
-                : "bg-slate-100 text-slate-400"
+                : "bg-slate-100 dark:bg-slate-700 text-slate-400 dark:text-slate-500"
             )}
             aria-label="Send message"
           >
             <Send className="h-4 w-4" />
           </Button>
         </div>
-        <p className="mt-1.5 text-center text-[10px] text-slate-400">
-          Press <kbd className="rounded bg-slate-100 px-1 py-0.5 font-mono text-[10px]">Enter</kbd> to send,{" "}
-          <kbd className="rounded bg-slate-100 px-1 py-0.5 font-mono text-[10px]">Shift + Enter</kbd> for new line
+        <p className="mt-1.5 text-center text-[10px] text-slate-400 dark:text-slate-500">
+          Press <kbd className="rounded bg-slate-100 dark:bg-slate-700 dark:text-slate-300 px-1 py-0.5 font-mono text-[10px]">Enter</kbd> to send,{" "}
+          <kbd className="rounded bg-slate-100 dark:bg-slate-700 dark:text-slate-300 px-1 py-0.5 font-mono text-[10px]">Shift + Enter</kbd> for new line
         </p>
       </div>
     </div>

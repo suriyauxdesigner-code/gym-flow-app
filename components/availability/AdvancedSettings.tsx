@@ -24,7 +24,7 @@ export default function AdvancedSettingsCard({
   return (
     <Card className="shadow-sm">
       <CardHeader className="pb-3">
-        <CardTitle className="flex items-center gap-2 text-base font-semibold text-slate-900">
+        <CardTitle className="flex items-center gap-2 text-base font-semibold text-slate-900 dark:text-slate-100">
           <Settings2 className="h-4 w-4 text-indigo-600" />
           Advanced Slot Settings
         </CardTitle>
@@ -34,10 +34,10 @@ export default function AdvancedSettingsCard({
         {/* Max Sessions Per Slot */}
         <div className="flex items-center justify-between gap-4">
           <div>
-            <Label className="text-sm font-medium text-slate-700">
+            <Label className="text-sm font-medium text-slate-700 dark:text-slate-200">
               Max Sessions Per Slot
             </Label>
-            <p className="text-xs text-slate-500">
+            <p className="text-xs text-slate-500 dark:text-slate-400">
               Maximum concurrent bookings allowed
             </p>
           </div>
@@ -59,14 +59,14 @@ export default function AdvancedSettingsCard({
         {/* Default Session Duration */}
         <div className="flex items-center justify-between gap-4">
           <div>
-            <Label className="text-sm font-medium text-slate-700">
+            <Label className="text-sm font-medium text-slate-700 dark:text-slate-200">
               Default Session Duration
             </Label>
-            <p className="text-xs text-slate-500">
+            <p className="text-xs text-slate-500 dark:text-slate-400">
               Applied to all new bookings
             </p>
           </div>
-          <div className="flex items-center rounded-xl border border-slate-200 bg-white p-1 shadow-sm">
+          <div className="flex items-center rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-1 shadow-sm">
             {DURATIONS.map((d) => (
               <button
                 key={d.value}
@@ -78,7 +78,7 @@ export default function AdvancedSettingsCard({
                   "rounded-lg px-3 py-1.5 text-xs font-medium transition-all",
                   settings.sessionDuration === d.value
                     ? "bg-indigo-600 text-white shadow-sm"
-                    : "text-slate-600 hover:bg-slate-100"
+                    : "text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700"
                 )}
               >
                 {d.label}
@@ -90,10 +90,10 @@ export default function AdvancedSettingsCard({
         {/* Break Between Sessions */}
         <div className="flex items-center justify-between gap-4">
           <div>
-            <Label className="text-sm font-medium text-slate-700">
+            <Label className="text-sm font-medium text-slate-700 dark:text-slate-200">
               Break Between Sessions
             </Label>
-            <p className="text-xs text-slate-500">
+            <p className="text-xs text-slate-500 dark:text-slate-400">
               Add 15-min buffer between consecutive bookings
             </p>
           </div>

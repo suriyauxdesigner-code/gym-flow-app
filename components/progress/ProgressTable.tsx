@@ -73,7 +73,7 @@ export default function ProgressTable({ logs }: ProgressTableProps) {
       <Card className="shadow-sm">
         <CardHeader className="pb-3">
           <div className="flex items-center justify-between">
-            <CardTitle className="text-base font-semibold text-slate-900">
+            <CardTitle className="text-base font-semibold text-slate-900 dark:text-slate-100">
               Recent Progress Logs
             </CardTitle>
             <Badge variant="secondary" className="text-xs">
@@ -86,12 +86,12 @@ export default function ProgressTable({ logs }: ProgressTableProps) {
           {logs.length === 0 ? (
             /* ── Empty State ── */
             <div className="flex flex-col items-center justify-center gap-3 py-16 text-center">
-              <div className="flex h-14 w-14 items-center justify-center rounded-full bg-slate-100">
+              <div className="flex h-14 w-14 items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800">
                 <ClipboardList className="h-7 w-7 text-slate-400" />
               </div>
               <div>
-                <p className="font-medium text-slate-700">No logs found</p>
-                <p className="text-sm text-slate-400">
+                <p className="font-medium text-slate-700 dark:text-slate-300">No logs found</p>
+                <p className="text-sm text-slate-400 dark:text-slate-500">
                   Try adjusting your search or date filter.
                 </p>
               </div>
@@ -100,7 +100,7 @@ export default function ProgressTable({ logs }: ProgressTableProps) {
             <ScrollArea className="h-[420px]">
               <Table>
                 <TableHeader>
-                  <TableRow className="bg-slate-50 hover:bg-slate-50">
+                  <TableRow className="bg-slate-50 dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800">
                     <TableHead className="pl-6 w-48">Client</TableHead>
                     <TableHead className="w-32">Date</TableHead>
                     <TableHead className="w-32">Weight</TableHead>
@@ -114,7 +114,7 @@ export default function ProgressTable({ logs }: ProgressTableProps) {
                   {logs.map((log) => {
                     const isDeclining = log.weightDelta > 0.5;
                     return (
-                      <TableRow key={log.id} className="hover:bg-slate-50/60">
+                      <TableRow key={log.id} className="hover:bg-slate-50/60 dark:hover:bg-slate-800/50">
                         {/* Client */}
                         <TableCell className="pl-6">
                           <div className="flex items-center gap-2.5">
@@ -132,7 +132,7 @@ export default function ProgressTable({ logs }: ProgressTableProps) {
                             </Avatar>
                             <Link
                               href={`/trainer/clients/${log.clientId}`}
-                              className="font-medium text-slate-900 hover:text-indigo-600 hover:underline underline-offset-2"
+                              className="font-medium text-slate-900 dark:text-slate-200 hover:text-indigo-600 dark:hover:text-indigo-400 hover:underline underline-offset-2"
                             >
                               {log.clientName}
                             </Link>
@@ -140,14 +140,14 @@ export default function ProgressTable({ logs }: ProgressTableProps) {
                         </TableCell>
 
                         {/* Date */}
-                        <TableCell className="text-slate-600">
+                        <TableCell className="text-slate-600 dark:text-slate-400">
                           {formatDate(log.date)}
                         </TableCell>
 
                         {/* Weight with trend indicator */}
                         <TableCell>
                           <div className="flex items-center gap-1.5">
-                            <span className="font-medium text-slate-900">
+                            <span className="font-medium text-slate-900 dark:text-slate-200">
                               {log.weight} kg
                             </span>
                             <span
@@ -185,7 +185,7 @@ export default function ProgressTable({ logs }: ProgressTableProps) {
                         <TableCell>
                           <Badge
                             variant="secondary"
-                            className="text-xs font-normal bg-indigo-50 text-indigo-700 border-0"
+                            className="text-xs font-normal bg-indigo-50 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 border-0"
                           >
                             {log.pr}
                           </Badge>
@@ -194,7 +194,7 @@ export default function ProgressTable({ logs }: ProgressTableProps) {
                         {/* Notes – truncated */}
                         <TableCell className="max-w-[200px]">
                           <p
-                            className="truncate text-sm text-slate-500"
+                            className="truncate text-sm text-slate-500 dark:text-slate-400"
                             title={log.notes}
                           >
                             {log.notes}
@@ -218,7 +218,7 @@ export default function ProgressTable({ logs }: ProgressTableProps) {
                             <Button
                               variant="ghost"
                               size="sm"
-                              className="gap-1 text-xs text-slate-600 hover:text-slate-900"
+                              className="gap-1 text-xs text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100"
                               onClick={() => openEdit(log)}
                             >
                               <Pencil className="h-3.5 w-3.5" />
@@ -246,17 +246,17 @@ export default function ProgressTable({ logs }: ProgressTableProps) {
           {editLog && (
             <div className="space-y-4 py-1">
               {/* Client info banner */}
-              <div className="flex items-center gap-3 rounded-xl bg-slate-50 p-3">
+              <div className="flex items-center gap-3 rounded-xl bg-slate-50 dark:bg-slate-800 p-3">
                 <Avatar className="h-9 w-9">
                   <AvatarFallback className="bg-indigo-100 text-sm font-semibold text-indigo-700">
                     {editLog.initials}
                   </AvatarFallback>
                 </Avatar>
                 <div>
-                  <p className="font-semibold text-slate-900">
+                  <p className="font-semibold text-slate-900 dark:text-slate-100">
                     {editLog.clientName}
                   </p>
-                  <p className="text-xs text-slate-500">
+                  <p className="text-xs text-slate-500 dark:text-slate-400">
                     {formatDate(editLog.date)}
                   </p>
                 </div>

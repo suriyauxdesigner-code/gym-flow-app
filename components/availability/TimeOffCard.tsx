@@ -43,7 +43,7 @@ export default function TimeOffCard({
     <Card className="shadow-sm">
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
-          <CardTitle className="flex items-center gap-2 text-base font-semibold text-slate-900">
+          <CardTitle className="flex items-center gap-2 text-base font-semibold text-slate-900 dark:text-slate-100">
             <CalendarOff className="h-4 w-4 text-red-500" />
             Time-Off Exceptions
           </CardTitle>
@@ -57,13 +57,13 @@ export default function TimeOffCard({
 
       <CardContent className="space-y-5">
         {/* Add Form */}
-        <div className="rounded-xl border border-dashed border-slate-200 bg-slate-50 p-4 space-y-3">
-          <p className="text-[10px] font-semibold uppercase tracking-widest text-slate-400">
+        <div className="rounded-xl border border-dashed border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 p-4 space-y-3">
+          <p className="text-[10px] font-semibold uppercase tracking-widest text-slate-400 dark:text-slate-500">
             Add Exception
           </p>
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             <div className="space-y-1.5">
-              <Label htmlFor="timeoff-date" className="text-xs font-medium text-slate-700">
+              <Label htmlFor="timeoff-date" className="text-xs font-medium text-slate-700 dark:text-slate-200">
                 Date
               </Label>
               <Input
@@ -75,7 +75,7 @@ export default function TimeOffCard({
               />
             </div>
             <div className="space-y-1.5">
-              <Label htmlFor="timeoff-note" className="text-xs font-medium text-slate-700">
+              <Label htmlFor="timeoff-note" className="text-xs font-medium text-slate-700 dark:text-slate-200">
                 Note (optional)
               </Label>
               <Input
@@ -108,21 +108,21 @@ export default function TimeOffCard({
             {timeOffs.map((to) => (
               <div
                 key={to.id}
-                className="flex items-center justify-between rounded-xl border border-slate-100 bg-white px-4 py-3 transition-colors hover:bg-slate-50"
+                className="flex items-center justify-between rounded-xl border border-slate-100 dark:border-slate-700 bg-white dark:bg-slate-800/50 px-4 py-3 transition-colors hover:bg-slate-50 dark:hover:bg-slate-800"
               >
                 <div>
-                  <p className="text-sm font-medium text-slate-800">
+                  <p className="text-sm font-medium text-slate-800 dark:text-slate-200">
                     {formatDate(to.date)}
                   </p>
                   {to.note && (
-                    <p className="text-xs text-slate-500">{to.note}</p>
+                    <p className="text-xs text-slate-500 dark:text-slate-400">{to.note}</p>
                   )}
                 </div>
                 <button
                   type="button"
                   onClick={() => onRemove(to.id)}
                   aria-label="Remove time off"
-                  className="rounded-lg p-1.5 text-slate-400 transition-colors hover:bg-red-50 hover:text-red-500"
+                  className="rounded-lg p-1.5 text-slate-400 transition-colors hover:bg-red-50 dark:hover:bg-red-950 hover:text-red-500 dark:hover:text-red-400"
                 >
                   <Trash2 className="h-4 w-4" />
                 </button>

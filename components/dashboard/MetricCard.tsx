@@ -29,11 +29,11 @@ export default function MetricCard({
       <CardContent className="p-6">
         <div className="flex items-start justify-between">
           <div className="flex flex-col gap-1">
-            <span className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+            <span className="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">
               {title}
             </span>
-            <span className="text-3xl font-bold text-slate-900">{value}</span>
-            <span className="text-sm text-slate-500">{subtext}</span>
+            <span className="text-3xl font-bold text-slate-900 dark:text-slate-100">{value}</span>
+            <span className="text-sm text-slate-500 dark:text-slate-400">{subtext}</span>
             {trend && (
               <span
                 className={cn(

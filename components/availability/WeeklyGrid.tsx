@@ -36,14 +36,14 @@ export default function WeeklyGrid({
   }
 
   return (
-    <div className="overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-sm">
+    <div className="overflow-x-auto rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-sm">
       <table className="min-w-full border-collapse">
         {/* ── Column Header ── */}
         <thead>
-          <tr className="border-b border-slate-200 bg-slate-50">
+          <tr className="border-b border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800">
             {/* Time column */}
-            <th className="sticky left-0 z-20 bg-slate-50 w-20 px-4 py-3 text-left">
-              <span className="text-[10px] font-semibold uppercase tracking-widest text-slate-400">
+            <th className="sticky left-0 z-20 bg-slate-50 dark:bg-slate-800 w-20 px-4 py-3 text-left">
+              <span className="text-[10px] font-semibold uppercase tracking-widest text-slate-400 dark:text-slate-500">
                 Time
               </span>
             </th>
@@ -54,12 +54,12 @@ export default function WeeklyGrid({
                 className="px-2 py-3 text-center min-w-[96px]"
               >
                 <div className="flex flex-col items-center gap-1.5">
-                  <span className="text-xs font-semibold text-slate-700">
+                  <span className="text-xs font-semibold text-slate-700 dark:text-slate-300">
                     {day.slice(0, 3)}
                   </span>
 
                   {isDayOff(day) ? (
-                    <Badge className="bg-slate-100 text-slate-400 hover:bg-slate-100 border-0 text-[10px] px-2 py-0">
+                    <Badge className="bg-slate-100 dark:bg-slate-700 text-slate-400 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 border-0 text-[10px] px-2 py-0">
                       Off Day
                     </Badge>
                   ) : (
@@ -83,10 +83,10 @@ export default function WeeklyGrid({
           {HOURS.map((hour) => (
             <tr
               key={hour}
-              className="border-b border-slate-100 last:border-0 hover:bg-slate-50/40 transition-colors"
+              className="border-b border-slate-100 dark:border-slate-800 last:border-0 hover:bg-slate-50/40 dark:hover:bg-slate-800/40 transition-colors"
             >
               {/* Sticky time label */}
-              <td className="sticky left-0 z-10 bg-white px-4 py-1.5 text-xs font-medium text-slate-500 border-r border-slate-100 whitespace-nowrap">
+              <td className="sticky left-0 z-10 bg-white dark:bg-slate-900 px-4 py-1.5 text-xs font-medium text-slate-500 dark:text-slate-400 border-r border-slate-100 dark:border-slate-800 whitespace-nowrap">
                 {formatHour(hour)}
               </td>
 
@@ -102,8 +102,8 @@ export default function WeeklyGrid({
                       className={cn(
                         "w-full rounded-lg py-2 text-[11px] font-semibold transition-all",
                         active
-                          ? "bg-indigo-100 text-indigo-700 hover:bg-indigo-200"
-                          : "bg-slate-50 text-slate-300 hover:bg-slate-100 hover:text-slate-400"
+                          ? "bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 hover:bg-indigo-200 dark:hover:bg-indigo-900"
+                          : "bg-slate-50 dark:bg-slate-800/50 text-slate-300 dark:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-slate-400 dark:hover:text-slate-400"
                       )}
                     >
                       {active ? "✓" : "—"}

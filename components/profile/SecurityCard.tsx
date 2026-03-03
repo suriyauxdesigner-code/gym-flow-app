@@ -71,16 +71,16 @@ export default function SecurityCard() {
     <>
       <Card className="rounded-2xl shadow-sm">
         <CardHeader className="pb-2">
-          <CardTitle className="text-base font-semibold text-slate-900">
+          <CardTitle className="text-base font-semibold text-slate-900 dark:text-slate-100">
             Security
           </CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col gap-6">
           {/* Last Login */}
-          <div className="flex items-center justify-between rounded-xl bg-slate-50 px-4 py-3">
+          <div className="flex items-center justify-between rounded-xl bg-slate-50 dark:bg-slate-800 px-4 py-3">
             <div>
-              <p className="text-sm font-medium text-slate-900">Last Login</p>
-              <p className="text-xs text-slate-400">
+              <p className="text-sm font-medium text-slate-900 dark:text-slate-100">Last Login</p>
+              <p className="text-xs text-slate-400 dark:text-slate-500">
                 Today, 9:32 AM · New York, US · Chrome on macOS
               </p>
             </div>
@@ -89,7 +89,7 @@ export default function SecurityCard() {
 
           {/* Active Sessions */}
           <div>
-            <p className="mb-3 text-sm font-semibold text-slate-700">
+            <p className="mb-3 text-sm font-semibold text-slate-700 dark:text-slate-200">
               Active Sessions
             </p>
             <div className="flex flex-col gap-2">
@@ -98,23 +98,23 @@ export default function SecurityCard() {
                 return (
                   <div
                     key={session.id}
-                    className="flex items-center justify-between rounded-xl border border-slate-100 bg-white px-4 py-3"
+                    className="flex items-center justify-between rounded-xl border border-slate-100 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-3"
                   >
                     <div className="flex items-center gap-3">
-                      <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-100">
-                        <DevIcon className="h-4 w-4 text-slate-500" />
+                      <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-100 dark:bg-slate-700">
+                        <DevIcon className="h-4 w-4 text-slate-500 dark:text-slate-300" />
                       </div>
                       <div>
-                        <p className="text-sm font-medium text-slate-900">
+                        <p className="text-sm font-medium text-slate-900 dark:text-slate-100">
                           {session.device}
                         </p>
-                        <p className="text-xs text-slate-400">
+                        <p className="text-xs text-slate-400 dark:text-slate-500">
                           {session.location} · {session.lastActive}
                         </p>
                       </div>
                     </div>
                     {session.current && (
-                      <span className="rounded-full bg-emerald-50 px-2.5 py-0.5 text-[11px] font-semibold text-emerald-700">
+                      <span className="rounded-full bg-emerald-50 dark:bg-emerald-950 px-2.5 py-0.5 text-[11px] font-semibold text-emerald-700 dark:text-emerald-400">
                         Current
                       </span>
                     )}
@@ -127,7 +127,7 @@ export default function SecurityCard() {
           {/* Actions */}
           <div
             className={cn(
-              "flex flex-wrap gap-3 border-t border-slate-100 pt-4"
+              "flex flex-wrap gap-3 border-t border-slate-100 dark:border-slate-700 pt-4"
             )}
           >
             <Button

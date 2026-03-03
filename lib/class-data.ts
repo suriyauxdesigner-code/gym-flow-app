@@ -206,7 +206,7 @@ export function getStatusConfig(status: ClassSession["status"]): StatusConfig {
       label: "In Progress",
       badge: "success",
       dot: "bg-emerald-500",
-      cardBg: "bg-emerald-50/60 ring-1 ring-emerald-200",
+      cardBg: "bg-emerald-50/60 ring-1 ring-emerald-200 dark:bg-emerald-950/20 dark:ring-emerald-900",
     };
   }
   if (status === "completed") {
@@ -214,13 +214,13 @@ export function getStatusConfig(status: ClassSession["status"]): StatusConfig {
       label: "Completed",
       badge: "secondary",
       dot: "bg-slate-400",
-      cardBg: "bg-slate-50 ring-1 ring-slate-200",
+      cardBg: "bg-slate-50 ring-1 ring-slate-200 dark:bg-slate-800/50 dark:ring-slate-700",
     };
   }
   return {
     label: "Upcoming",
     badge: "indigo",
     dot: "bg-indigo-500",
-    cardBg: "bg-white ring-1 ring-indigo-100",
+    cardBg: "bg-white ring-1 ring-indigo-100 dark:bg-slate-800 dark:ring-indigo-900/50",
   };
 }

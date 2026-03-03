@@ -25,7 +25,7 @@ export default function ClientsNeedingUpdateCard({
     <Card className="shadow-sm">
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
-          <CardTitle className="flex items-center gap-2 text-base font-semibold text-slate-900">
+          <CardTitle className="flex items-center gap-2 text-base font-semibold text-slate-900 dark:text-slate-100">
             <AlertTriangle className="h-4 w-4 text-amber-500" />
             Clients Needing Update
           </CardTitle>
@@ -39,7 +39,7 @@ export default function ClientsNeedingUpdateCard({
 
       <CardContent>
         {clients.length === 0 ? (
-          <div className="flex items-center gap-2 rounded-xl bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
+          <div className="flex items-center gap-2 rounded-xl bg-emerald-50 dark:bg-emerald-950 px-4 py-3 text-sm text-emerald-700 dark:text-emerald-400">
             <span className="text-base">✓</span>
             All clients are up to date — great work!
           </div>
@@ -48,7 +48,7 @@ export default function ClientsNeedingUpdateCard({
             {clients.map((client) => (
               <div
                 key={client.id}
-                className="flex items-center justify-between rounded-xl border border-amber-100 bg-amber-50/40 px-4 py-3 transition-colors hover:bg-amber-50"
+                className="flex items-center justify-between rounded-xl border border-amber-100 dark:border-amber-900/30 bg-amber-50/40 dark:bg-amber-950/10 px-4 py-3 transition-colors hover:bg-amber-50 dark:hover:bg-amber-950/20"
               >
                 {/* Left: Avatar + Name + Last update */}
                 <div className="flex items-center gap-3">
@@ -58,8 +58,8 @@ export default function ClientsNeedingUpdateCard({
                     </AvatarFallback>
                   </Avatar>
                   <div>
-                    <p className="font-medium text-slate-900">{client.name}</p>
-                    <p className="text-xs text-slate-500">
+                    <p className="font-medium text-slate-900 dark:text-slate-100">{client.name}</p>
+                    <p className="text-xs text-slate-500 dark:text-slate-400">
                       Last update: {formatLastUpdate(client.lastUpdate)}
                     </p>
                   </div>

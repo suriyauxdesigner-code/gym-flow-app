@@ -52,7 +52,7 @@ export default function MessagesPage() {
 
   // Break out of the layout's p-6 padding and fill the viewport height below the header
   return (
-    <div className="-m-6 flex h-[calc(100vh-64px)] overflow-hidden border-t border-slate-200">
+    <div className="-m-6 flex h-[calc(100vh-64px)] overflow-hidden border-t border-slate-200 dark:border-slate-800">
       <ConversationList
         conversations={conversations}
         activeId={activeId}

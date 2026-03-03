@@ -36,10 +36,10 @@ export default function ConversationList({
   );
 
   return (
-    <div className="flex w-80 flex-shrink-0 flex-col border-r border-slate-200 bg-white">
+    <div className="flex w-80 flex-shrink-0 flex-col border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
       {/* Header */}
-      <div className="border-b border-slate-100 px-4 pb-3 pt-4">
-        <h2 className="mb-3 text-lg font-bold text-slate-900">Messages</h2>
+      <div className="border-b border-slate-100 dark:border-slate-800 px-4 pb-3 pt-4">
+        <h2 className="mb-3 text-lg font-bold text-slate-900 dark:text-slate-100">Messages</h2>
         <div className="relative">
           <Search className="absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-slate-400" />
           <Input
@@ -71,8 +71,8 @@ export default function ConversationList({
                 className={cn(
                   "relative flex w-full items-start gap-3 px-4 py-3.5 text-left transition-colors",
                   isActive
-                    ? "border-l-[3px] border-indigo-600 bg-indigo-50"
-                    : "border-l-[3px] border-transparent hover:bg-slate-50"
+                    ? "border-l-[3px] border-indigo-600 bg-indigo-50 dark:bg-indigo-950/50"
+                    : "border-l-[3px] border-transparent hover:bg-slate-50 dark:hover:bg-slate-800/60"
                 )}
               >
                 {/* Avatar with online dot */}
@@ -85,7 +85,7 @@ export default function ConversationList({
                     </AvatarFallback>
                   </Avatar>
                   {conv.isOnline && (
-                    <span className="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full bg-emerald-500 ring-2 ring-white" />
+                    <span className="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full bg-emerald-500 ring-2 ring-white dark:ring-slate-900" />
                   )}
                 </div>
 
@@ -95,12 +95,12 @@ export default function ConversationList({
                     <p
                       className={cn(
                         "truncate text-sm font-semibold",
-                        isActive ? "text-indigo-900" : "text-slate-900"
+                        isActive ? "text-indigo-900 dark:text-indigo-300" : "text-slate-900 dark:text-slate-100"
                       )}
                     >
                       {conv.clientName}
                     </p>
-                    <span className="flex-shrink-0 text-[10px] text-slate-400">
+                    <span className="flex-shrink-0 text-[10px] text-slate-400 dark:text-slate-500">
                       {formatConvTime(conv.lastMessageTime)}
                     </span>
                   </div>
@@ -110,8 +110,8 @@ export default function ConversationList({
                       className={cn(
                         "truncate text-xs",
                         conv.unread > 0
-                          ? "font-medium text-slate-700"
-                          : "text-slate-400"
+                          ? "font-medium text-slate-700 dark:text-slate-200"
+                          : "text-slate-400 dark:text-slate-500"
                       )}
                     >
                       {conv.lastMessage}
