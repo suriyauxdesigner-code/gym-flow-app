@@ -1,0 +1,114 @@
+"use client";
+
+import { usePathname } from "next/navigation";
+import { Bell, ChevronDown, Search } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import NotificationsPanel from "@/components/notifications/NotificationsPanel";
+
+const PAGE_TITLES: Record<string, { title: string; subtitle: string }> = {
+  "/owner/dashboard": {
+    title: "Dashboard",
+    subtitle: "Overview of your gym performance",
+  },
+  "/owner/members": {
+    title: "Members",
+    subtitle: "Manage gym memberships and member records",
+  },
+  "/owner/members/add": {
+    title: "Add Member",
+    subtitle: "Register a new gym member",
+  },
+};
+
+const INITIAL_UNREAD = 3;
+
+export default function OwnerHeader() {
+  const pathname = usePathname();
+
+  // Dynamic title for member detail pages
+  let page = PAGE_TITLES[pathname];
+  if (!page && pathname.startsWith("/owner/members/")) {
+    page = { title: "Member Details", subtitle: "View and manage member profile" };
+  }
+  if (!page) {
+    page = { title: "FitPro", subtitle: "" };
+  }
+
+  return (
+    <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-6 shadow-sm">
+      {/* Left: Page Title */}
+      <div>
+        <h1 className="text-xl font-bold text-slate-900 dark:text-slate-100">
+          {page.title}
+        </h1>
+        <p className="text-xs text-slate-500 dark:text-slate-400">
+          {page.subtitle}
+        </p>
+      </div>
+
+      {/* Right: Search + Actions */}
+      <div className="flex items-center gap-2">
+        {/* Search */}
+        <div className="relative hidden sm:block">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
+          <Input
+            placeholder="Search members..."
+            className="h-8 w-52 rounded-lg pl-8 text-xs bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700"
+          />
+        </div>
+
+        {/* Notification Bell → Popover */}
+        <Popover>
+          <PopoverTrigger asChild>
+            <div className="relative">
+              <Button
+                variant="ghost"
+                size="icon"
+                aria-label="Open notifications"
+                className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100"
+              >
+                <Bell className="h-5 w-5" />
+              </Button>
+              {INITIAL_UNREAD > 0 && (
+                <Badge className="pointer-events-none absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-indigo-600 p-0 text-[10px] hover:bg-indigo-600">
+                  {INITIAL_UNREAD}
+                </Badge>
+              )}
+            </div>
+          </PopoverTrigger>
+          <PopoverContent align="end" sideOffset={8} className="w-[380px] p-0">
+            <NotificationsPanel />
+          </PopoverContent>
+        </Popover>
+
+        {/* Owner Avatar */}
+        <button
+          type="button"
+          aria-label="Owner menu"
+          className="flex items-center gap-2.5 rounded-xl px-3 py-1.5 transition-colors hover:bg-slate-100 dark:hover:bg-slate-800"
+        >
+          <Avatar className="h-8 w-8">
+            <AvatarFallback className="text-xs">JD</AvatarFallback>
+          </Avatar>
+          <div className="hidden text-left sm:block">
+            <p className="text-sm font-semibold text-slate-900 dark:text-slate-100">
+              Jordan Davis
+            </p>
+            <p className="text-xs text-slate-500 dark:text-slate-400">
+              Gym Owner
+            </p>
+          </div>
+          <ChevronDown className="h-4 w-4 text-slate-400 dark:text-slate-500" />
+        </button>
+      </div>
+    </header>
+  );
+}
