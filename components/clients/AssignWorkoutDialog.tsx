@@ -133,14 +133,14 @@ export default function AssignWorkoutDialog({
       <DialogContent className="sm:max-w-[600px]">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
-            <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-indigo-100">
-              <Dumbbell className="h-4 w-4 text-indigo-600" />
+            <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-indigo-100 dark:bg-indigo-900">
+              <Dumbbell className="h-4 w-4 text-indigo-600 dark:text-indigo-400" />
             </div>
             Assign Workout Plan
           </DialogTitle>
           <DialogDescription>
             Create or assign a structured workout routine for{" "}
-            <span className="font-medium text-slate-700">{clientName}</span>.
+            <span className="font-medium text-slate-700 dark:text-slate-300">{clientName}</span>.
           </DialogDescription>
         </DialogHeader>
 
@@ -160,8 +160,8 @@ export default function AssignWorkoutDialog({
                     className={cn(
                       "rounded-xl border px-4 py-3 text-left text-sm font-medium transition-colors",
                       template === t
-                        ? "border-indigo-500 bg-indigo-50 text-indigo-700 ring-1 ring-indigo-300"
-                        : "border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50"
+                        ? "border-indigo-500 bg-indigo-50 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 ring-1 ring-indigo-300 dark:ring-indigo-800"
+                        : "border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:border-slate-300 dark:hover:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-700"
                     )}
                   >
                     {t}
@@ -208,7 +208,7 @@ export default function AssignWorkoutDialog({
                           "flex-1 rounded-lg border py-2 text-sm font-semibold transition-colors",
                           duration === d
                             ? "border-indigo-500 bg-indigo-600 text-white"
-                            : "border-slate-200 bg-white text-slate-700 hover:bg-slate-50"
+                            : "border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700"
                         )}
                       >
                         {d}w
@@ -239,7 +239,7 @@ export default function AssignWorkoutDialog({
                         "h-9 w-12 rounded-lg border text-xs font-semibold transition-colors",
                         daysPerWeek.includes(day)
                           ? "border-indigo-500 bg-indigo-600 text-white"
-                          : "border-slate-200 bg-white text-slate-600 hover:bg-slate-50"
+                          : "border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700"
                       )}
                     >
                       {day}
@@ -268,37 +268,37 @@ export default function AssignWorkoutDialog({
                 <h4 className="text-[10px] font-semibold uppercase tracking-widest text-slate-400">
                   Exercises Preview
                 </h4>
-                <div className="overflow-hidden rounded-xl border border-slate-200">
+                <div className="overflow-hidden rounded-xl border border-slate-200 dark:border-slate-700">
                   <table className="w-full text-sm">
                     <thead>
-                      <tr className="border-b border-slate-100 bg-slate-50">
-                        <th className="py-2 pl-4 text-left text-xs font-semibold text-slate-500">
+                      <tr className="border-b border-slate-100 dark:border-slate-700 bg-slate-50 dark:bg-slate-800">
+                        <th className="py-2 pl-4 text-left text-xs font-semibold text-slate-500 dark:text-slate-400">
                           Day
                         </th>
-                        <th className="py-2 text-left text-xs font-semibold text-slate-500">
+                        <th className="py-2 text-left text-xs font-semibold text-slate-500 dark:text-slate-400">
                           Exercise
                         </th>
-                        <th className="py-2 text-left text-xs font-semibold text-slate-500">
+                        <th className="py-2 text-left text-xs font-semibold text-slate-500 dark:text-slate-400">
                           Sets
                         </th>
-                        <th className="py-2 pr-4 text-left text-xs font-semibold text-slate-500">
+                        <th className="py-2 pr-4 text-left text-xs font-semibold text-slate-500 dark:text-slate-400">
                           Reps
                         </th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-slate-100">
+                    <tbody className="divide-y divide-slate-100 dark:divide-slate-700">
                       {exercises.map((ex, i) => (
-                        <tr key={i} className="hover:bg-slate-50">
-                          <td className="py-2.5 pl-4 text-xs font-medium text-indigo-600">
+                        <tr key={i} className="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                          <td className="py-2.5 pl-4 text-xs font-medium text-indigo-600 dark:text-indigo-400">
                             {ex.day}
                           </td>
-                          <td className="py-2.5 text-sm text-slate-800">
+                          <td className="py-2.5 text-sm text-slate-800 dark:text-slate-200">
                             {ex.exercise}
                           </td>
-                          <td className="py-2.5 text-sm text-slate-600">
+                          <td className="py-2.5 text-sm text-slate-600 dark:text-slate-400">
                             {ex.sets}
                           </td>
-                          <td className="py-2.5 pr-4 text-sm text-slate-600">
+                          <td className="py-2.5 pr-4 text-sm text-slate-600 dark:text-slate-400">
                             {ex.reps}
                           </td>
                         </tr>
@@ -310,12 +310,12 @@ export default function AssignWorkoutDialog({
             )}
 
             {template === "Custom Plan" && (
-              <div className="rounded-xl border border-dashed border-slate-300 bg-slate-50 py-6 text-center">
-                <Dumbbell className="mx-auto mb-2 h-6 w-6 text-slate-300" />
-                <p className="text-sm font-medium text-slate-500">
+              <div className="rounded-xl border border-dashed border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-800/50 py-6 text-center">
+                <Dumbbell className="mx-auto mb-2 h-6 w-6 text-slate-300 dark:text-slate-600" />
+                <p className="text-sm font-medium text-slate-500 dark:text-slate-400">
                   Custom plan
                 </p>
-                <p className="mt-0.5 text-xs text-slate-400">
+                <p className="mt-0.5 text-xs text-slate-400 dark:text-slate-500">
                   Exercises will be added manually after assignment.
                 </p>
               </div>
@@ -323,7 +323,7 @@ export default function AssignWorkoutDialog({
           </div>
         </ScrollArea>
 
-        <DialogFooter className="gap-2 border-t border-slate-100 pt-4">
+        <DialogFooter className="gap-2 border-t border-slate-100 dark:border-slate-700 pt-4">
           <DialogClose asChild>
             <Button variant="outline" size="sm">
               Cancel

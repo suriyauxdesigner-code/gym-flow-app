@@ -181,14 +181,14 @@ export default function AssignMealPlanDialog({
       <DialogContent className="sm:max-w-[600px]">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
-            <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-emerald-100">
-              <Salad className="h-4 w-4 text-emerald-600" />
+            <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-emerald-100 dark:bg-emerald-900">
+              <Salad className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
             </div>
             Assign Meal Plan
           </DialogTitle>
           <DialogDescription>
             Set a nutrition plan for{" "}
-            <span className="font-medium text-slate-700">{clientName}</span>.
+            <span className="font-medium text-slate-700 dark:text-slate-300">{clientName}</span>.
           </DialogDescription>
         </DialogHeader>
 
@@ -208,8 +208,8 @@ export default function AssignMealPlanDialog({
                     className={cn(
                       "rounded-xl border px-4 py-3 text-left text-sm font-medium transition-colors",
                       planType === type
-                        ? "border-indigo-500 bg-indigo-50 text-indigo-700 ring-1 ring-indigo-300"
-                        : "border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50"
+                        ? "border-indigo-500 bg-indigo-50 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 ring-1 ring-indigo-300 dark:ring-indigo-800"
+                        : "border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:border-slate-300 dark:hover:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-700"
                     )}
                   >
                     {type}
@@ -275,7 +275,7 @@ export default function AssignMealPlanDialog({
                 {/* Macro preview when calories are filled */}
                 {calories && (protein || carbs || fats) && (
                   <div className="col-span-2">
-                    <div className="flex items-center gap-3 rounded-xl bg-slate-50 px-4 py-3">
+                    <div className="flex items-center gap-3 rounded-xl bg-slate-50 dark:bg-slate-800 px-4 py-3">
                       {[
                         {
                           label: "Protein",
@@ -303,10 +303,10 @@ export default function AssignMealPlanDialog({
                               m.color
                             )}
                           />
-                          <p className="text-sm font-bold text-slate-800">
+                          <p className="text-sm font-bold text-slate-800 dark:text-slate-200">
                             {m.value}g
                           </p>
-                          <p className="text-xs text-slate-500">{m.label}</p>
+                          <p className="text-xs text-slate-500 dark:text-slate-400">{m.label}</p>
                         </div>
                       ))}
                     </div>
@@ -320,18 +320,18 @@ export default function AssignMealPlanDialog({
               <h4 className="text-[10px] font-semibold uppercase tracking-widest text-slate-400">
                 Meal Breakdown
               </h4>
-              <div className="overflow-hidden rounded-xl border border-slate-200 bg-white">
+              <div className="overflow-hidden rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800">
                 {MEAL_ROWS.map((meal, i) => (
                   <div
                     key={meal.key}
                     className={cn(
                       "p-4",
-                      i < MEAL_ROWS.length - 1 && "border-b border-slate-100"
+                      i < MEAL_ROWS.length - 1 && "border-b border-slate-100 dark:border-slate-700"
                     )}
                   >
                     <Label
                       htmlFor={`mp-${meal.key}`}
-                      className="mb-2 flex items-center gap-1.5 text-xs font-semibold text-slate-700"
+                      className="mb-2 flex items-center gap-1.5 text-xs font-semibold text-slate-700 dark:text-slate-300"
                     >
                       <span>{meal.emoji}</span>
                       {meal.label}
@@ -351,7 +351,7 @@ export default function AssignMealPlanDialog({
           </div>
         </ScrollArea>
 
-        <DialogFooter className="gap-2 border-t border-slate-100 pt-4">
+        <DialogFooter className="gap-2 border-t border-slate-100 dark:border-slate-700 pt-4">
           <DialogClose asChild>
             <Button variant="outline" size="sm">
               Cancel

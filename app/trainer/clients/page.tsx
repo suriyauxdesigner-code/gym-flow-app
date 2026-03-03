@@ -144,10 +144,10 @@ export default function MyClientsPage() {
         <div className="flex flex-wrap items-center gap-2">
           {(
             [
-              { label: "All Clients", value: ALL_CLIENTS.length, filter: "all" as FilterStatus, color: "bg-slate-100 text-slate-700 hover:bg-slate-200" },
-              { label: "Active",      value: ALL_CLIENTS.filter((c) => c.status === "active").length,    filter: "active" as FilterStatus,    color: "bg-emerald-50 text-emerald-700 hover:bg-emerald-100" },
-              { label: "Attention",   value: ALL_CLIENTS.filter((c) => c.status === "attention").length, filter: "attention" as FilterStatus, color: "bg-amber-50 text-amber-700 hover:bg-amber-100" },
-              { label: "Inactive",   value: ALL_CLIENTS.filter((c) => c.status === "inactive").length,  filter: "inactive" as FilterStatus,  color: "bg-slate-50 text-slate-500 hover:bg-slate-100" },
+              { label: "All Clients", value: ALL_CLIENTS.length, filter: "all" as FilterStatus, color: "bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-600" },
+              { label: "Active",      value: ALL_CLIENTS.filter((c) => c.status === "active").length,    filter: "active" as FilterStatus,    color: "bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-100 dark:hover:bg-emerald-900" },
+              { label: "Attention",   value: ALL_CLIENTS.filter((c) => c.status === "attention").length, filter: "attention" as FilterStatus, color: "bg-amber-50 dark:bg-amber-950 text-amber-700 dark:text-amber-300 hover:bg-amber-100 dark:hover:bg-amber-900" },
+              { label: "Inactive",   value: ALL_CLIENTS.filter((c) => c.status === "inactive").length,  filter: "inactive" as FilterStatus,  color: "bg-slate-50 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700" },
             ] as const
           ).map((chip) => (
             <button
@@ -157,7 +157,7 @@ export default function MyClientsPage() {
               className={`flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold transition-colors ${chip.color} ${filterStatus === chip.filter ? "ring-2 ring-indigo-400 ring-offset-1" : ""}`}
             >
               {chip.label}
-              <span className="rounded-full bg-white/60 px-1.5 py-0.5 font-bold">
+              <span className="rounded-full bg-white/60 dark:bg-black/20 px-1.5 py-0.5 font-bold">
                 {chip.value}
               </span>
             </button>
@@ -184,7 +184,7 @@ export default function MyClientsPage() {
               value={filterStatus}
               onChange={(e) => setFilterStatus(e.target.value as FilterStatus)}
               aria-label="Filter by status"
-              className="h-9 appearance-none rounded-lg border border-slate-200 bg-white pl-8 pr-8 text-sm text-slate-700 shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="h-9 appearance-none rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 pl-8 pr-8 text-sm text-slate-700 dark:text-slate-200 shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500"
             >
               <option value="all">All Status</option>
               <option value="active">Active</option>
@@ -193,7 +193,7 @@ export default function MyClientsPage() {
             </select>
           </div>
 
-          <Button variant="ghost" className="gap-1.5 text-slate-600">
+          <Button variant="ghost" className="gap-1.5 text-slate-600 dark:text-slate-400">
             <Download className="h-4 w-4" />
             <span className="hidden sm:inline">Export</span>
           </Button>
@@ -208,12 +208,12 @@ export default function MyClientsPage() {
         {filtered.length > 0 ? (
           <ClientTable clients={filtered} totalCount={ALL_CLIENTS.length} />
         ) : (
-          <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-slate-200 bg-white py-16 text-center">
-            <Search className="mb-3 h-10 w-10 text-slate-300" />
-            <p className="text-sm font-semibold text-slate-600">
+          <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 py-16 text-center">
+            <Search className="mb-3 h-10 w-10 text-slate-300 dark:text-slate-600" />
+            <p className="text-sm font-semibold text-slate-600 dark:text-slate-300">
               No clients match your search
             </p>
-            <p className="mt-1 text-xs text-slate-400">
+            <p className="mt-1 text-xs text-slate-400 dark:text-slate-500">
               Try adjusting your filters or search term
             </p>
           </div>

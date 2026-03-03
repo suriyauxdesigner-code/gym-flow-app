@@ -449,10 +449,10 @@ function AttendanceBar({ value }: { value: number }) {
   const color =
     value >= 85 ? "bg-emerald-500" : value >= 65 ? "bg-amber-400" : "bg-red-400";
   const text =
-    value >= 85 ? "text-emerald-700" : value >= 65 ? "text-amber-700" : "text-red-600";
+    value >= 85 ? "text-emerald-700 dark:text-emerald-400" : value >= 65 ? "text-amber-700 dark:text-amber-400" : "text-red-600 dark:text-red-400";
   return (
     <div className="flex items-center gap-2">
-      <div className="h-2 w-32 overflow-hidden rounded-full bg-slate-100">
+      <div className="h-2 w-32 overflow-hidden rounded-full bg-slate-100 dark:bg-slate-700">
         <div className={cn("h-full rounded-full", color)} style={{ width: `${value}%` }} />
       </div>
       <span className={cn("text-sm font-semibold", text)}>{value}%</span>
@@ -468,52 +468,52 @@ function OverviewTab({ client }: { client: ClientDetail }) {
       {/* Personal Info */}
       <Card>
         <CardHeader className="pb-3">
-          <CardTitle className="text-sm font-semibold text-slate-900">Personal Information</CardTitle>
+          <CardTitle className="text-sm font-semibold text-slate-900 dark:text-slate-100">Personal Information</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="flex items-center gap-3">
-            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-indigo-50">
-              <Phone className="h-4 w-4 text-indigo-600" />
+            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-indigo-50 dark:bg-indigo-950">
+              <Phone className="h-4 w-4 text-indigo-600 dark:text-indigo-400" />
             </div>
             <div>
-              <p className="text-xs text-slate-500">Phone</p>
-              <p className="text-sm font-medium text-slate-900">{client.phone}</p>
+              <p className="text-xs text-slate-500 dark:text-slate-400">Phone</p>
+              <p className="text-sm font-medium text-slate-900 dark:text-slate-100">{client.phone}</p>
             </div>
           </div>
           <div className="flex items-center gap-3">
-            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-indigo-50">
-              <Mail className="h-4 w-4 text-indigo-600" />
+            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-indigo-50 dark:bg-indigo-950">
+              <Mail className="h-4 w-4 text-indigo-600 dark:text-indigo-400" />
             </div>
             <div>
-              <p className="text-xs text-slate-500">Email</p>
-              <p className="text-sm font-medium text-slate-900">{client.email}</p>
+              <p className="text-xs text-slate-500 dark:text-slate-400">Email</p>
+              <p className="text-sm font-medium text-slate-900 dark:text-slate-100">{client.email}</p>
             </div>
           </div>
           <div className="flex items-center gap-3">
-            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-indigo-50">
-              <CalendarDays className="h-4 w-4 text-indigo-600" />
+            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-indigo-50 dark:bg-indigo-950">
+              <CalendarDays className="h-4 w-4 text-indigo-600 dark:text-indigo-400" />
             </div>
             <div>
-              <p className="text-xs text-slate-500">Joined Date</p>
-              <p className="text-sm font-medium text-slate-900">{client.joinedDate}</p>
+              <p className="text-xs text-slate-500 dark:text-slate-400">Joined Date</p>
+              <p className="text-sm font-medium text-slate-900 dark:text-slate-100">{client.joinedDate}</p>
             </div>
           </div>
           <div className="flex items-center gap-3">
-            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-indigo-50">
-              <ClipboardEdit className="h-4 w-4 text-indigo-600" />
+            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-indigo-50 dark:bg-indigo-950">
+              <ClipboardEdit className="h-4 w-4 text-indigo-600 dark:text-indigo-400" />
             </div>
             <div>
-              <p className="text-xs text-slate-500">Assigned Plan</p>
-              <p className="text-sm font-medium text-slate-900">{client.assignedPlan}</p>
+              <p className="text-xs text-slate-500 dark:text-slate-400">Assigned Plan</p>
+              <p className="text-sm font-medium text-slate-900 dark:text-slate-100">{client.assignedPlan}</p>
             </div>
           </div>
           <div className="flex items-center gap-3">
-            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-indigo-50">
-              <CalendarDays className="h-4 w-4 text-indigo-600" />
+            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-indigo-50 dark:bg-indigo-950">
+              <CalendarDays className="h-4 w-4 text-indigo-600 dark:text-indigo-400" />
             </div>
             <div>
-              <p className="text-xs text-slate-500">Next Session</p>
-              <p className="text-sm font-medium text-slate-900">{client.nextSession}</p>
+              <p className="text-xs text-slate-500 dark:text-slate-400">Next Session</p>
+              <p className="text-sm font-medium text-slate-900 dark:text-slate-100">{client.nextSession}</p>
             </div>
           </div>
         </CardContent>
@@ -522,49 +522,49 @@ function OverviewTab({ client }: { client: ClientDetail }) {
       {/* Attendance Summary */}
       <Card>
         <CardHeader className="pb-3">
-          <CardTitle className="text-sm font-semibold text-slate-900">Attendance Summary</CardTitle>
+          <CardTitle className="text-sm font-semibold text-slate-900 dark:text-slate-100">Attendance Summary</CardTitle>
         </CardHeader>
         <CardContent className="space-y-5">
           <div className="grid grid-cols-3 gap-3">
-            <div className="rounded-xl bg-slate-50 p-3 text-center">
-              <p className="text-2xl font-bold text-slate-900">{client.totalVisits}</p>
-              <p className="mt-0.5 text-xs text-slate-500">Total Visits</p>
+            <div className="rounded-xl bg-slate-50 dark:bg-slate-800 p-3 text-center">
+              <p className="text-2xl font-bold text-slate-900 dark:text-slate-100">{client.totalVisits}</p>
+              <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">Total Visits</p>
             </div>
-            <div className="rounded-xl bg-indigo-50 p-3 text-center">
-              <p className="text-2xl font-bold text-indigo-700">{client.thisMonthVisits}</p>
-              <p className="mt-0.5 text-xs text-indigo-500">This Month</p>
+            <div className="rounded-xl bg-indigo-50 dark:bg-indigo-950 p-3 text-center">
+              <p className="text-2xl font-bold text-indigo-700 dark:text-indigo-300">{client.thisMonthVisits}</p>
+              <p className="mt-0.5 text-xs text-indigo-500 dark:text-indigo-400">This Month</p>
             </div>
-            <div className="rounded-xl bg-emerald-50 p-3 text-center">
-              <p className="text-2xl font-bold text-emerald-700">{client.attendance}%</p>
-              <p className="mt-0.5 text-xs text-emerald-500">Attendance</p>
+            <div className="rounded-xl bg-emerald-50 dark:bg-emerald-950 p-3 text-center">
+              <p className="text-2xl font-bold text-emerald-700 dark:text-emerald-300">{client.attendance}%</p>
+              <p className="mt-0.5 text-xs text-emerald-500 dark:text-emerald-400">Attendance</p>
             </div>
           </div>
 
           <div>
             <div className="mb-2 flex items-center justify-between">
-              <p className="text-xs font-medium text-slate-600">Attendance Rate</p>
-              <span className="text-xs text-slate-400">Target: 85%</span>
+              <p className="text-xs font-medium text-slate-600 dark:text-slate-400">Attendance Rate</p>
+              <span className="text-xs text-slate-400 dark:text-slate-500">Target: 85%</span>
             </div>
             <AttendanceBar value={client.attendance} />
           </div>
 
           {/* Mini chart placeholder */}
           <div>
-            <p className="mb-2 text-xs font-medium text-slate-600">Monthly Trend</p>
+            <p className="mb-2 text-xs font-medium text-slate-600 dark:text-slate-400">Monthly Trend</p>
             <div className="flex h-16 items-end gap-1.5">
               {[65, 72, 80, 75, 88, client.attendance].map((val, i) => (
                 <div key={i} className="flex flex-1 flex-col items-center gap-1">
                   <div
                     className={cn(
                       "w-full rounded-t-sm",
-                      i === 5 ? "bg-indigo-500" : "bg-slate-200"
+                      i === 5 ? "bg-indigo-500" : "bg-slate-200 dark:bg-slate-600"
                     )}
                     style={{ height: `${(val / 100) * 56}px` }}
                   />
                 </div>
               ))}
             </div>
-            <div className="mt-1 flex justify-between text-[10px] text-slate-400">
+            <div className="mt-1 flex justify-between text-[10px] text-slate-400 dark:text-slate-500">
               <span>Oct</span><span>Nov</span><span>Dec</span><span>Jan</span><span>Feb</span><span>Mar</span>
             </div>
           </div>
@@ -602,7 +602,7 @@ function ProgressTab({ client }: { client: ClientDetail }) {
       <Card>
         <CardHeader className="pb-3">
           <div className="flex items-center justify-between">
-            <CardTitle className="text-sm font-semibold text-slate-900">Progress Chart</CardTitle>
+            <CardTitle className="text-sm font-semibold text-slate-900 dark:text-slate-100">Progress Chart</CardTitle>
             <Button size="sm" onClick={() => setOpen(true)} className="gap-1.5 text-xs">
               <Plus className="h-3.5 w-3.5" />
               Add New Progress Log
@@ -611,7 +611,7 @@ function ProgressTab({ client }: { client: ClientDetail }) {
         </CardHeader>
         <CardContent>
           {/* Chart placeholder */}
-          <div className="flex h-36 items-end gap-3 rounded-xl bg-slate-50 px-4 pb-4 pt-6">
+          <div className="flex h-36 items-end gap-3 rounded-xl bg-slate-50 dark:bg-slate-800 px-4 pb-4 pt-6">
             {entries.slice(0, 6).reverse().map((entry, i, arr) => {
               const max = Math.max(...arr.map((e) => e.weight));
               const min = Math.min(...arr.map((e) => e.weight));
@@ -619,24 +619,24 @@ function ProgressTab({ client }: { client: ClientDetail }) {
               const height = 20 + ((max - entry.weight) / range) * 60;
               return (
                 <div key={i} className="flex flex-1 flex-col items-center gap-1">
-                  <span className="text-[10px] font-medium text-slate-500">{entry.weight}kg</span>
+                  <span className="text-[10px] font-medium text-slate-500 dark:text-slate-400">{entry.weight}kg</span>
                   <div
                     className="w-full rounded-t-md bg-indigo-400 opacity-80 transition-all hover:opacity-100"
                     style={{ height: `${100 - height + 20}px` }}
                   />
-                  <span className="text-[9px] text-slate-400 truncate w-full text-center">{entry.date.split(",")[0]}</span>
+                  <span className="text-[9px] text-slate-400 dark:text-slate-500 truncate w-full text-center">{entry.date.split(",")[0]}</span>
                 </div>
               );
             })}
           </div>
-          <p className="mt-2 text-center text-xs text-slate-400">Weight over time (kg)</p>
+          <p className="mt-2 text-center text-xs text-slate-400 dark:text-slate-500">Weight over time (kg)</p>
         </CardContent>
       </Card>
 
       {/* Progress History Table */}
       <Card>
         <CardHeader className="pb-3">
-          <CardTitle className="text-sm font-semibold text-slate-900">Progress History</CardTitle>
+          <CardTitle className="text-sm font-semibold text-slate-900 dark:text-slate-100">Progress History</CardTitle>
         </CardHeader>
         <CardContent className="p-0">
           <Table>
@@ -652,12 +652,12 @@ function ProgressTab({ client }: { client: ClientDetail }) {
             <TableBody>
               {entries.map((entry, i) => (
                 <TableRow key={i}>
-                  <TableCell className="pl-6 font-medium text-slate-900">{entry.date}</TableCell>
+                  <TableCell className="pl-6 font-medium text-slate-900 dark:text-slate-100">{entry.date}</TableCell>
                   <TableCell>{entry.weight}</TableCell>
                   <TableCell>{entry.bodyFat > 0 ? `${entry.bodyFat}%` : "—"}</TableCell>
                   <TableCell>
                     {entry.pr !== "—" ? (
-                      <span className="inline-flex items-center gap-1 rounded-full bg-indigo-50 px-2 py-0.5 text-xs font-medium text-indigo-700">
+                      <span className="inline-flex items-center gap-1 rounded-full bg-indigo-50 dark:bg-indigo-950 px-2 py-0.5 text-xs font-medium text-indigo-700 dark:text-indigo-300">
                         <TrendingUp className="h-3 w-3" />
                         {entry.pr}
                       </span>
@@ -665,7 +665,7 @@ function ProgressTab({ client }: { client: ClientDetail }) {
                       <span className="text-slate-400">—</span>
                     )}
                   </TableCell>
-                  <TableCell className="pr-6 text-slate-500 text-sm">{entry.notes}</TableCell>
+                  <TableCell className="pr-6 text-slate-500 dark:text-slate-400 text-sm">{entry.notes}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -757,18 +757,18 @@ function WorkoutTab({
     <div className="space-y-4">
       {/* Assigned plan success banner */}
       {assignedPlan && (
-        <div className="flex items-start gap-3 rounded-xl border border-emerald-200 bg-emerald-50 p-4">
-          <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-emerald-600" />
+        <div className="flex items-start gap-3 rounded-xl border border-emerald-200 dark:border-emerald-900 bg-emerald-50 dark:bg-emerald-950/30 p-4">
+          <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-emerald-600 dark:text-emerald-400" />
           <div>
-            <p className="text-sm font-semibold text-emerald-800">
+            <p className="text-sm font-semibold text-emerald-800 dark:text-emerald-300">
               New plan assigned: {assignedPlan.name}
             </p>
-            <p className="mt-0.5 text-xs text-emerald-600">
+            <p className="mt-0.5 text-xs text-emerald-600 dark:text-emerald-400">
               Starts {assignedPlan.startDate} · {assignedPlan.duration} weeks ·{" "}
               {assignedPlan.daysPerWeek.join(", ")}
             </p>
             {assignedPlan.notes && (
-              <p className="mt-1 text-xs italic text-emerald-600">
+              <p className="mt-1 text-xs italic text-emerald-600 dark:text-emerald-400">
                 {assignedPlan.notes}
               </p>
             )}
@@ -780,10 +780,10 @@ function WorkoutTab({
         <CardHeader className="pb-3">
           <div className="flex items-center justify-between">
             <div>
-              <CardTitle className="text-sm font-semibold text-slate-900">
+              <CardTitle className="text-sm font-semibold text-slate-900 dark:text-slate-100">
                 Current Workout Plan
               </CardTitle>
-              <p className="mt-0.5 text-xs text-slate-500">
+              <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
                 Schedule: {displaySchedule}
               </p>
             </div>
@@ -805,29 +805,29 @@ function WorkoutTab({
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="flex items-center gap-2">
-            <span className="rounded-full bg-indigo-50 px-3 py-1 text-sm font-semibold text-indigo-700">
+            <span className="rounded-full bg-indigo-50 dark:bg-indigo-950 px-3 py-1 text-sm font-semibold text-indigo-700 dark:text-indigo-300">
               {displayName}
             </span>
             {assignedPlan && (
-              <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700">
+              <span className="rounded-full bg-emerald-50 dark:bg-emerald-950 px-3 py-1 text-xs font-semibold text-emerald-700 dark:text-emerald-400">
                 Recently Assigned
               </span>
             )}
           </div>
           <div>
-            <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-slate-400">
+            <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-slate-400 dark:text-slate-500">
               Exercises
             </p>
             <ul className="space-y-2">
               {client.workoutPlan.exercises.map((ex, i) => (
                 <li
                   key={i}
-                  className="flex items-center gap-3 rounded-lg bg-slate-50 px-4 py-2.5"
+                  className="flex items-center gap-3 rounded-lg bg-slate-50 dark:bg-slate-800 px-4 py-2.5"
                 >
-                  <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-indigo-100 text-xs font-bold text-indigo-600">
+                  <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-indigo-100 dark:bg-indigo-950 text-xs font-bold text-indigo-600 dark:text-indigo-400">
                     {i + 1}
                   </div>
-                  <span className="text-sm text-slate-700">{ex}</span>
+                  <span className="text-sm text-slate-700 dark:text-slate-300">{ex}</span>
                 </li>
               ))}
             </ul>
@@ -872,13 +872,13 @@ function MealTab({
     <div className="space-y-4">
       {/* Assigned meal success banner */}
       {assignedMeal && (
-        <div className="flex items-start gap-3 rounded-xl border border-emerald-200 bg-emerald-50 p-4">
-          <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-emerald-600" />
+        <div className="flex items-start gap-3 rounded-xl border border-emerald-200 dark:border-emerald-900 bg-emerald-50 dark:bg-emerald-950/30 p-4">
+          <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-emerald-600 dark:text-emerald-400" />
           <div>
-            <p className="text-sm font-semibold text-emerald-800">
+            <p className="text-sm font-semibold text-emerald-800 dark:text-emerald-300">
               Meal plan assigned: {assignedMeal.type}
             </p>
-            <p className="mt-0.5 text-xs text-emerald-600">
+            <p className="mt-0.5 text-xs text-emerald-600 dark:text-emerald-400">
               {assignedMeal.calories} kcal · {assignedMeal.protein}g protein ·{" "}
               {assignedMeal.carbs}g carbs · {assignedMeal.fats}g fats
             </p>
@@ -890,10 +890,10 @@ function MealTab({
         <CardHeader className="pb-3">
           <div className="flex items-center justify-between">
             <div>
-              <CardTitle className="text-sm font-semibold text-slate-900">
+              <CardTitle className="text-sm font-semibold text-slate-900 dark:text-slate-100">
                 Current Meal Plan
               </CardTitle>
-              <p className="mt-0.5 text-xs text-slate-500">{planName}</p>
+              <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">{planName}</p>
             </div>
             <div className="flex items-center gap-2">
               <Button variant="outline" size="sm" className="gap-1.5 text-xs">
@@ -913,30 +913,30 @@ function MealTab({
         </CardHeader>
         <CardContent className="space-y-5">
           {/* Calorie target */}
-          <div className="flex items-center justify-center rounded-2xl bg-indigo-50 py-5">
+          <div className="flex items-center justify-center rounded-2xl bg-indigo-50 dark:bg-indigo-950 py-5">
             <div className="text-center">
-              <p className="text-4xl font-bold text-indigo-700">{calories}</p>
-              <p className="mt-1 text-sm text-indigo-500">Daily Calories (kcal)</p>
+              <p className="text-4xl font-bold text-indigo-700 dark:text-indigo-300">{calories}</p>
+              <p className="mt-1 text-sm text-indigo-500 dark:text-indigo-400">Daily Calories (kcal)</p>
             </div>
           </div>
 
           {/* Macros */}
           <div>
-            <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-slate-400">
+            <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-slate-400 dark:text-slate-500">
               Daily Macros
             </p>
             <div className="grid grid-cols-3 gap-3">
               {macros.map((m) => (
                 <div
                   key={m.label}
-                  className="rounded-xl border border-slate-100 bg-slate-50 p-3 text-center"
+                  className="rounded-xl border border-slate-100 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 p-3 text-center"
                 >
-                  <p className="text-xl font-bold text-slate-900">
+                  <p className="text-xl font-bold text-slate-900 dark:text-slate-100">
                     {m.value}
                     {m.unit}
                   </p>
-                  <p className="mt-0.5 text-xs text-slate-500">{m.label}</p>
-                  <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-slate-200">
+                  <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">{m.label}</p>
+                  <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-slate-200 dark:bg-slate-600">
                     <div
                       className={cn("h-full rounded-full", m.color)}
                       style={{
@@ -952,22 +952,22 @@ function MealTab({
           {/* Meal breakdown — shown only when a plan was assigned */}
           {mealBreakdown && (
             <div>
-              <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-slate-400">
+              <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-slate-400 dark:text-slate-500">
                 Meal Breakdown
               </p>
-              <div className="overflow-hidden rounded-xl border border-slate-200 bg-white">
+              <div className="overflow-hidden rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800">
                 {mealBreakdown.map((meal, i) => (
                   <div
                     key={meal.label}
                     className={cn(
                       "px-4 py-3",
-                      i < mealBreakdown.length - 1 && "border-b border-slate-100"
+                      i < mealBreakdown.length - 1 && "border-b border-slate-100 dark:border-slate-700"
                     )}
                   >
-                    <p className="mb-0.5 text-xs font-semibold text-slate-600">
+                    <p className="mb-0.5 text-xs font-semibold text-slate-600 dark:text-slate-400">
                       {meal.emoji} {meal.label}
                     </p>
-                    <p className="text-sm text-slate-700">
+                    <p className="text-sm text-slate-700 dark:text-slate-300">
                       {meal.value || (
                         <span className="italic text-slate-400">
                           Not specified
@@ -1001,7 +1001,7 @@ function NotesTab({ client }: { client: ClientDetail }) {
       {/* Add note */}
       <Card>
         <CardHeader className="pb-3">
-          <CardTitle className="text-sm font-semibold text-slate-900">Add Trainer Note</CardTitle>
+          <CardTitle className="text-sm font-semibold text-slate-900 dark:text-slate-100">Add Trainer Note</CardTitle>
         </CardHeader>
         <CardContent className="space-y-3">
           <Textarea
@@ -1024,20 +1024,20 @@ function NotesTab({ client }: { client: ClientDetail }) {
         <CardHeader className="pb-3">
           <CardTitle className="text-sm font-semibold text-slate-900">
             Trainer Notes
-            <span className="ml-2 inline-flex h-5 w-5 items-center justify-center rounded-full bg-indigo-100 text-xs font-bold text-indigo-600">
+            <span className="ml-2 inline-flex h-5 w-5 items-center justify-center rounded-full bg-indigo-100 dark:bg-indigo-950 text-xs font-bold text-indigo-600 dark:text-indigo-400">
               {notes.length}
             </span>
           </CardTitle>
         </CardHeader>
         <CardContent className="p-0">
           {notes.length === 0 ? (
-            <div className="py-10 text-center text-sm text-slate-400">No notes yet.</div>
+            <div className="py-10 text-center text-sm text-slate-400 dark:text-slate-500">No notes yet.</div>
           ) : (
-            <ul className="divide-y divide-slate-100">
+            <ul className="divide-y divide-slate-100 dark:divide-slate-700">
               {notes.map((note, i) => (
                 <li key={i} className="flex items-start gap-3 px-6 py-3.5">
-                  <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-indigo-400" />
-                  <p className="text-sm text-slate-700">{note}</p>
+                  <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-indigo-400 dark:text-indigo-500" />
+                  <p className="text-sm text-slate-700 dark:text-slate-300">{note}</p>
                 </li>
               ))}
             </ul>
@@ -1076,7 +1076,7 @@ export default function ClientDetailPage({ params }: { params: Promise<{ id: str
       <div>
         <Link
           href="/trainer/clients"
-          className="inline-flex items-center gap-1.5 text-sm text-slate-500 transition-colors hover:text-indigo-600"
+          className="inline-flex items-center gap-1.5 text-sm text-slate-500 dark:text-slate-400 transition-colors hover:text-indigo-600 dark:hover:text-indigo-400"
         >
           <ArrowLeft className="h-4 w-4" />
           Back to My Clients
@@ -1095,21 +1095,21 @@ export default function ClientDetailPage({ params }: { params: Promise<{ id: str
                 </AvatarFallback>
               </Avatar>
               <div className="space-y-1.5">
-                <h1 className="text-xl font-bold text-slate-900">{client.name}</h1>
+                <h1 className="text-xl font-bold text-slate-900 dark:text-slate-100">{client.name}</h1>
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-medium text-slate-700">
+                  <span className="rounded-full bg-slate-100 dark:bg-slate-700 px-2.5 py-0.5 text-xs font-medium text-slate-700 dark:text-slate-300">
                     {client.plan}
                   </span>
                   <StatusBadge status={client.status} />
                 </div>
-                <div className="flex flex-wrap items-center gap-4 pt-0.5 text-xs text-slate-500">
+                <div className="flex flex-wrap items-center gap-4 pt-0.5 text-xs text-slate-500 dark:text-slate-400">
                   <span className="flex items-center gap-1">
                     <CalendarDays className="h-3.5 w-3.5" />
                     Last visit: {client.lastVisit}
                   </span>
                   <span className="flex items-center gap-1">
                     <Activity className="h-3.5 w-3.5" />
-                    Attendance: <span className="font-semibold text-slate-700">{client.attendance}%</span>
+                    Attendance: <span className="font-semibold text-slate-700 dark:text-slate-200">{client.attendance}%</span>
                   </span>
                 </div>
               </div>
