@@ -1,5 +1,6 @@
-import MemberForm from "@/components/owner/members/MemberForm";
+import { redirect } from "next/navigation";
 
+// Moved to modal — redirect back to members list
 export default function AddMemberPage() {
-  return <MemberForm />;
+  redirect("/owner/members");
 }

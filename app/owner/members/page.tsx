@@ -1,11 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import { Plus, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import MemberTable from "@/components/owner/members/MemberTable";
+import AddMemberModal from "@/components/owner/members/AddMemberModal";
 import { MOCK_MEMBERS, type MemberPaymentStatus } from "@/lib/owner-data";
 import { cn } from "@/lib/utils";
 
@@ -22,6 +22,7 @@ const STATUS_FILTERS: { label: string; value: FilterStatus }[] = [
 export default function MembersPage() {
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState<FilterStatus>("all");
+  const [modalOpen, setModalOpen] = useState(false);
 
   const filtered = MOCK_MEMBERS.filter((m) => {
     const matchesSearch =
@@ -47,12 +48,10 @@ export default function MembersPage() {
         </div>
         <Button
           className="bg-indigo-600 hover:bg-indigo-700 text-white gap-1.5 shrink-0 self-start sm:self-auto"
-          asChild
+          onClick={() => setModalOpen(true)}
         >
-          <Link href="/owner/members/add">
-            <Plus className="h-4 w-4" />
-            Add Member
-          </Link>
+          <Plus className="h-4 w-4" />
+          Add Member
         </Button>
       </div>
 
@@ -111,6 +110,9 @@ export default function MembersPage() {
           </p>
         </div>
       )}
+
+      {/* Add Member Modal */}
+      <AddMemberModal open={modalOpen} onOpenChange={setModalOpen} />
     </div>
   );
 }
