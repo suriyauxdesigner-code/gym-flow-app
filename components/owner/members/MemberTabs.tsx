@@ -1,12 +1,12 @@
 "use client";
 
-import { useState } from "react";
 import { toast } from "sonner";
-import { CheckCircle2, Download, FileText } from "lucide-react";
+import { Download, FileText, Mail, Phone, User, Calendar, RefreshCw } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   Table,
   TableBody,
@@ -15,7 +15,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import {
   type OwnerMember,
@@ -31,21 +30,31 @@ interface MemberTabsProps {
   progress: ProgressEntry[];
 }
 
-// ── Info Row helper ───────────────────────────────────────────────────────────
-function InfoRow({ label, value }: { label: string; value: string }) {
+const PLAN_FEES: Record<string, string> = {
+  Elite: "₹3,500.00 / Month",
+  Premium: "₹2,500.00 / Month",
+  Basic: "₹1,500.00 / Month",
+  "Day Pass": "₹500.00 / Visit",
+};
+
+function InfoItem({ icon: Icon, label, value }: { icon: React.ElementType; label: string; value: string }) {
   return (
-    <div className="flex items-start justify-between py-2.5 border-b border-slate-100 dark:border-slate-800 last:border-0">
-      <span className="text-xs font-semibold uppercase tracking-widest text-slate-400 mt-0.5">
-        {label}
-      </span>
-      <span className="text-sm font-medium text-slate-900 dark:text-slate-100 text-right max-w-[60%]">
-        {value}
-      </span>
+    <div className="flex items-start gap-3 py-3 border-b border-slate-100 dark:border-slate-800 last:border-0">
+      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-indigo-50 dark:bg-indigo-950/40">
+        <Icon className="h-4 w-4 text-indigo-600 dark:text-indigo-400" />
+      </div>
+      <div>
+        <p className="text-[10px] font-semibold uppercase tracking-widest text-slate-400">
+          {label}
+        </p>
+        <p className="text-sm font-medium text-slate-900 dark:text-slate-100 mt-0.5">
+          {value}
+        </p>
+      </div>
     </div>
   );
 }
 
-// ── Payment status badge ──────────────────────────────────────────────────────
 function PayStatusBadge({ status }: { status: string }) {
   if (status === "Paid")
     return <Badge variant="success">Paid</Badge>;
@@ -60,30 +69,27 @@ export default function MemberTabs({
   attendance,
   progress,
 }: MemberTabsProps) {
-  const [notes, setNotes] = useState(member.notes);
-
-  function saveNotes() {
-    toast.success("Notes saved", {
-      icon: <CheckCircle2 className="h-4 w-4 text-emerald-500" />,
-    });
-  }
-
-  // Attendance stats
-  const attended = attendance.filter((a) => a.attended).length;
-  const missed = attendance.filter((a) => !a.attended).length;
+  const thisMonthCount = attendance.filter((a) => {
+    const now = new Date();
+    const d = new Date(a.date);
+    return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
+  }).length;
 
   return (
     <Tabs defaultValue="overview" className="space-y-5">
       <TabsList className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-1 rounded-xl h-auto gap-0.5">
-        {["overview", "payments", "attendance", "progress", "notes"].map((tab) => (
+        {[
+          { value: "overview", label: "Overview" },
+          { value: "payments", label: "Payments" },
+          { value: "attendance", label: "Attendance" },
+          { value: "progress", label: "Progress" },
+        ].map((tab) => (
           <TabsTrigger
-            key={tab}
-            value={tab}
-            className="rounded-lg px-4 py-2 text-sm font-medium capitalize data-[state=active]:bg-indigo-600 data-[state=active]:text-white data-[state=active]:shadow-sm"
+            key={tab.value}
+            value={tab.value}
+            className="rounded-lg px-4 py-2 text-sm font-medium data-[state=active]:bg-indigo-600 data-[state=active]:text-white data-[state=active]:shadow-sm"
           >
-            {tab === "overview"
-              ? "Overview"
-              : tab.charAt(0).toUpperCase() + tab.slice(1)}
+            {tab.label}
           </TabsTrigger>
         ))}
       </TabsList>
@@ -93,146 +99,201 @@ export default function MemberTabs({
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
           {/* LEFT col */}
           <div className="space-y-5">
+            {/* Personal Information */}
             <Card>
-              <CardHeader className="pb-2">
-                <CardTitle className="text-xs font-semibold uppercase tracking-widest text-slate-400">
+              <CardHeader className="pb-1">
+                <CardTitle className="text-base font-semibold text-slate-900 dark:text-slate-100">
                   Personal Information
                 </CardTitle>
               </CardHeader>
               <CardContent className="pt-0">
-                <InfoRow label="Email" value={member.email} />
-                <InfoRow label="Phone" value={member.phone} />
-                <InfoRow label="Gender" value={member.gender} />
-                <InfoRow label="Date of Birth" value={member.dob} />
-                <InfoRow label="Member Since" value={member.joinDate} />
+                <InfoItem icon={Mail} label="Mail" value={member.email} />
+                <InfoItem icon={Phone} label="Phone Number" value={member.phone} />
+                <InfoItem icon={User} label="Gender" value={member.gender} />
+                <InfoItem icon={Calendar} label="Member Since" value={member.joinDate} />
               </CardContent>
             </Card>
 
+            {/* Trainer Assigned */}
             <Card>
-              <CardHeader className="pb-2">
-                <CardTitle className="text-xs font-semibold uppercase tracking-widest text-slate-400">
+              <CardHeader className="pb-1">
+                <CardTitle className="text-base font-semibold text-slate-900 dark:text-slate-100">
                   Trainer Assigned
                 </CardTitle>
               </CardHeader>
-              <CardContent className="pt-0">
-                <div className="flex items-center gap-3 py-2">
-                  <div className="h-10 w-10 rounded-full bg-indigo-100 dark:bg-indigo-900/40 flex items-center justify-center text-sm font-bold text-indigo-700 dark:text-indigo-300">
-                    {member.trainer
-                      .split(" ")
-                      .map((n) => n[0])
-                      .join("")}
-                  </div>
+              <CardContent className="pt-0 space-y-3">
+                <div className="flex items-center gap-3 pt-2">
+                  <Avatar className="h-10 w-10 shrink-0">
+                    <AvatarFallback className="text-sm font-bold bg-indigo-100 dark:bg-indigo-900/40 text-indigo-700 dark:text-indigo-300">
+                      {member.trainer.split(" ").map((n) => n[0]).join("").slice(0, 2)}
+                    </AvatarFallback>
+                  </Avatar>
                   <div>
                     <p className="text-sm font-semibold text-slate-900 dark:text-slate-100">
                       {member.trainer}
                     </p>
-                    <p className="text-xs text-slate-500 dark:text-slate-400">
-                      Personal Trainer
+                    <p className="text-xs text-indigo-600 dark:text-indigo-400">
+                      Strength & Conditioning
                     </p>
                   </div>
                 </div>
+                <Button
+                  variant="outline"
+                  className="w-full gap-2 text-slate-600 dark:text-slate-400"
+                  size="sm"
+                  onClick={() => toast.info("Reassign trainer coming soon")}
+                >
+                  <RefreshCw className="h-3.5 w-3.5" />
+                  Reassign Trainer
+                </Button>
               </CardContent>
             </Card>
 
+            {/* Membership Info */}
             <Card>
-              <CardHeader className="pb-2">
-                <CardTitle className="text-xs font-semibold uppercase tracking-widest text-slate-400">
+              <CardHeader className="pb-1">
+                <CardTitle className="text-base font-semibold text-slate-900 dark:text-slate-100">
                   Membership Info
                 </CardTitle>
               </CardHeader>
-              <CardContent className="pt-0">
-                <InfoRow label="Plan" value={member.plan} />
-                <InfoRow label="Expiry Date" value={member.expiryDate} />
-                <InfoRow
-                  label="Auto-Pay"
-                  value={member.autoPayEnabled ? "Enabled" : "Disabled"}
-                />
+              <CardContent className="pt-2">
+                <div className="grid grid-cols-2 gap-4 py-2 border-b border-slate-100 dark:border-slate-800">
+                  <div>
+                    <p className="text-[10px] font-semibold uppercase tracking-widest text-slate-400">
+                      Joined Date
+                    </p>
+                    <p className="text-sm font-medium text-slate-900 dark:text-slate-100 mt-1">
+                      {member.joinDate}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-[10px] font-semibold uppercase tracking-widest text-slate-400">
+                      Expiry Date
+                    </p>
+                    <p className="text-sm font-medium text-slate-900 dark:text-slate-100 mt-1">
+                      {member.expiryDate}
+                    </p>
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-4 py-2">
+                  <div>
+                    <p className="text-[10px] font-semibold uppercase tracking-widest text-slate-400">
+                      Amount
+                    </p>
+                    <p className="text-sm font-medium text-slate-900 dark:text-slate-100 mt-1">
+                      {PLAN_FEES[member.plan] ?? "₹1,800.00 / Month"}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-[10px] font-semibold uppercase tracking-widest text-slate-400">
+                      Renewing Status
+                    </p>
+                    <p className={cn("text-sm font-medium mt-1", member.autoPayEnabled ? "text-emerald-600 dark:text-emerald-400" : "text-slate-900 dark:text-slate-100")}>
+                      {member.autoPayEnabled ? "Auto-renewing" : "Manual"}
+                    </p>
+                  </div>
+                </div>
               </CardContent>
             </Card>
           </div>
 
           {/* RIGHT col */}
           <div className="space-y-5">
+            {/* Attendance Summary */}
             <Card>
-              <CardHeader className="pb-2">
-                <CardTitle className="text-xs font-semibold uppercase tracking-widest text-slate-400">
+              <CardHeader className="pb-3">
+                <CardTitle className="text-base font-semibold text-slate-900 dark:text-slate-100">
                   Attendance Summary
                 </CardTitle>
               </CardHeader>
-              <CardContent className="pt-0">
-                {/* Rate bar */}
-                <div className="py-3">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm text-slate-600 dark:text-slate-400">
-                      Attendance Rate
-                    </span>
-                    <span
-                      className={cn(
-                        "text-sm font-bold",
-                        member.attendanceRate >= 80
-                          ? "text-emerald-600"
-                          : member.attendanceRate >= 60
-                          ? "text-amber-600"
-                          : "text-red-500"
-                      )}
-                    >
-                      {member.attendanceRate}%
-                    </span>
+              <CardContent className="pt-0 space-y-4">
+                {/* 3 stat boxes */}
+                <div className="grid grid-cols-3 gap-3">
+                  <div className="rounded-xl border border-slate-100 dark:border-slate-800 p-3 text-center">
+                    <p className="text-xl font-bold text-slate-900 dark:text-slate-100">
+                      {attendance.length}
+                    </p>
+                    <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
+                      Total Visits
+                    </p>
                   </div>
-                  <div className="h-2.5 w-full overflow-hidden rounded-full bg-slate-100 dark:bg-slate-700">
+                  <div className="rounded-xl border border-indigo-100 dark:border-indigo-900/40 bg-indigo-50/50 dark:bg-indigo-950/20 p-3 text-center">
+                    <p className="text-xl font-bold text-indigo-600 dark:text-indigo-400">
+                      {thisMonthCount}
+                    </p>
+                    <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
+                      This Month
+                    </p>
+                  </div>
+                  <div className="rounded-xl border border-emerald-100 dark:border-emerald-900/40 bg-emerald-50/50 dark:bg-emerald-950/20 p-3 text-center">
+                    <p className="text-xl font-bold text-emerald-600 dark:text-emerald-400">
+                      {member.attendanceRate}%
+                    </p>
+                    <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
+                      Attendance
+                    </p>
+                  </div>
+                </div>
+
+                {/* Attendance Rate bar */}
+                <div>
+                  <div className="flex items-center justify-between mb-1.5">
+                    <span className="text-xs text-slate-600 dark:text-slate-400">Attendance Rate</span>
+                    <span className="text-xs text-slate-400">Target: 85%</span>
+                  </div>
+                  <div className="h-2 w-full overflow-hidden rounded-full bg-slate-100 dark:bg-slate-700">
                     <div
-                      className={cn(
-                        "h-full rounded-full transition-all",
-                        member.attendanceRate >= 80
-                          ? "bg-emerald-500"
-                          : member.attendanceRate >= 60
-                          ? "bg-amber-400"
-                          : "bg-red-400"
-                      )}
+                      className="h-full rounded-full bg-indigo-500"
                       style={{ width: `${member.attendanceRate}%` }}
                     />
                   </div>
                 </div>
-                <Separator className="my-2" />
-                <InfoRow label="Sessions Attended" value={String(attended)} />
-                <InfoRow label="Sessions Missed" value={String(missed)} />
-                <InfoRow label="Last Visit" value={member.lastVisit} />
+
+                {/* Monthly Trend placeholder chart */}
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-xs text-slate-600 dark:text-slate-400">Monthly Trend</span>
+                    <span className="rounded-full bg-slate-100 dark:bg-slate-700 px-2 py-0.5 text-[10px] font-medium text-slate-500 dark:text-slate-400">
+                      3 Months
+                    </span>
+                  </div>
+                  <div className="h-16 w-full rounded-xl bg-slate-50 dark:bg-slate-800/50 flex items-end px-3 pb-2 gap-1">
+                    {[40, 55, 35, 65, 80, 70, 90].map((h, i) => (
+                      <div
+                        key={i}
+                        className="flex-1 rounded-t-sm bg-indigo-200 dark:bg-indigo-900/60"
+                        style={{ height: `${h}%` }}
+                      />
+                    ))}
+                  </div>
+                </div>
               </CardContent>
             </Card>
 
+            {/* Outstanding Balance */}
             <Card>
-              <CardHeader className="pb-2">
-                <CardTitle className="text-xs font-semibold uppercase tracking-widest text-slate-400">
+              <CardHeader className="pb-1">
+                <CardTitle className="text-base font-semibold text-slate-900 dark:text-slate-100">
                   Outstanding Balance
                 </CardTitle>
               </CardHeader>
               <CardContent className="pt-0">
                 <div className="flex items-center justify-between py-3">
-                  <span className="text-sm text-slate-600 dark:text-slate-400">
-                    Amount Due
-                  </span>
+                  <span className="text-sm text-slate-600 dark:text-slate-400">Amount Due</span>
                   <span
                     className={cn(
                       "text-2xl font-bold",
-                      member.balance > 0
-                        ? "text-red-600"
-                        : "text-emerald-600"
+                      member.balance > 0 ? "text-red-600" : "text-emerald-600"
                     )}
                   >
-                    {member.balance > 0
-                      ? `$${member.balance.toFixed(2)}`
-                      : "$0.00"}
+                    ${member.balance.toFixed(2)}
                   </span>
                 </div>
                 {member.balance > 0 && (
                   <Button
                     size="sm"
-                    className="w-full bg-indigo-600 hover:bg-indigo-700 text-white mt-1"
-                    onClick={() =>
-                      toast.success("Payment recorded", {
-                        icon: <CheckCircle2 className="h-4 w-4 text-emerald-500" />,
-                      })
-                    }
+                    className="w-full bg-indigo-600 hover:bg-indigo-700 text-white"
+                    onClick={() => toast.success("Payment recorded")}
                   >
                     Record Payment
                   </Button>
@@ -240,28 +301,27 @@ export default function MemberTabs({
               </CardContent>
             </Card>
 
+            {/* Auto-Pay Status */}
             <Card>
-              <CardHeader className="pb-2">
-                <CardTitle className="text-xs font-semibold uppercase tracking-widest text-slate-400">
+              <CardHeader className="pb-1">
+                <CardTitle className="text-base font-semibold text-slate-900 dark:text-slate-100">
                   Auto-Pay Status
                 </CardTitle>
               </CardHeader>
               <CardContent className="pt-0">
                 <div className="flex items-center justify-between py-3">
-                  <span className="text-sm text-slate-600 dark:text-slate-400">
-                    Recurring billing
-                  </span>
-                  <Badge
-                    variant={member.autoPayEnabled ? "success" : "secondary"}
+                  <span className="text-sm text-slate-600 dark:text-slate-400">Recurring billing</span>
+                  <span
+                    className={cn(
+                      "rounded-full px-2.5 py-1 text-xs font-medium",
+                      member.autoPayEnabled
+                        ? "bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-400"
+                        : "bg-slate-100 text-slate-500 dark:bg-slate-800 dark:text-slate-400"
+                    )}
                   >
                     {member.autoPayEnabled ? "Enabled" : "Disabled"}
-                  </Badge>
+                  </span>
                 </div>
-                {!member.autoPayEnabled && (
-                  <p className="text-xs text-slate-400 dark:text-slate-500">
-                    Manual payment collection required each cycle.
-                  </p>
-                )}
               </CardContent>
             </Card>
           </div>
@@ -317,10 +377,8 @@ export default function MemberTabs({
                       <TableCell className="pr-6 text-right">
                         <button
                           type="button"
-                          className="flex items-center gap-1.5 text-xs font-medium text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 ml-auto"
-                          onClick={() =>
-                            toast.info(`Downloading ${p.invoice}…`)
-                          }
+                          className="flex items-center gap-1.5 text-xs font-medium text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 ml-auto"
+                          onClick={() => toast.info(`Downloading ${p.invoice}…`)}
                         >
                           <FileText className="h-3.5 w-3.5" />
                           {p.invoice}
@@ -373,9 +431,15 @@ export default function MemberTabs({
                       </TableCell>
                       <TableCell className="pr-6">
                         {a.attended ? (
-                          <Badge variant="success">Attended</Badge>
+                          <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 px-2.5 py-1 text-xs font-medium">
+                            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                            Attended
+                          </span>
                         ) : (
-                          <Badge variant="destructive">Missed</Badge>
+                          <span className="inline-flex items-center gap-1.5 rounded-full bg-red-50 dark:bg-red-950/40 text-red-700 dark:text-red-400 px-2.5 py-1 text-xs font-medium">
+                            <span className="h-1.5 w-1.5 rounded-full bg-red-500" />
+                            Missed
+                          </span>
                         )}
                       </TableCell>
                     </TableRow>
@@ -383,32 +447,6 @@ export default function MemberTabs({
                 </TableBody>
               </Table>
             )}
-
-            {/* Placeholder chart strip */}
-            <div className="px-6 py-4 border-t border-slate-100 dark:border-slate-800">
-              <p className="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-3">
-                Weekly Pattern
-              </p>
-              <div className="flex items-end gap-1.5 h-16">
-                {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map(
-                  (day, i) => {
-                    const heights = [60, 90, 40, 80, 100, 70, 20];
-                    return (
-                      <div
-                        key={day}
-                        className="flex flex-1 flex-col items-center gap-1"
-                      >
-                        <div
-                          className="w-full rounded-t-sm bg-indigo-200 dark:bg-indigo-900/60"
-                          style={{ height: `${heights[i]}%` }}
-                        />
-                        <span className="text-[9px] text-slate-400">{day}</span>
-                      </div>
-                    );
-                  }
-                )}
-              </div>
-            </div>
           </CardContent>
         </Card>
       </TabsContent>
@@ -456,34 +494,6 @@ export default function MemberTabs({
                 </TableBody>
               </Table>
             )}
-          </CardContent>
-        </Card>
-      </TabsContent>
-
-      {/* ── NOTES ─────────────────────────────────────────────────────────── */}
-      <TabsContent value="notes">
-        <Card>
-          <CardHeader className="pb-4">
-            <CardTitle className="text-base font-semibold text-slate-900 dark:text-slate-100">
-              Internal Notes
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <textarea
-              rows={8}
-              value={notes}
-              onChange={(e) => setNotes(e.target.value)}
-              placeholder="Add notes about this member..."
-              className="w-full resize-none rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-3 text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            />
-            <div className="flex justify-end">
-              <Button
-                className="bg-indigo-600 hover:bg-indigo-700 text-white"
-                onClick={saveNotes}
-              >
-                Save Notes
-              </Button>
-            </div>
           </CardContent>
         </Card>
       </TabsContent>

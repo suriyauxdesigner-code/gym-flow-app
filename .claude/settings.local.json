@@ -9,7 +9,9 @@
       "mcp__plugin_figma_figma__get_metadata",
       "Bash(node -e \"const fs=require\\(''fs''\\); const data=JSON.parse\\(fs.readFileSync\\(''mcp-plugin_figma_figma-get_metadata-1772606123880.txt'',''utf8''\\)\\); const text=data[0].text; const lines=text.split\\(''\\\\n''\\).slice\\(0,150\\); console.log\\(lines.join\\(''\\\\n''\\)\\);\")",
       "Bash(node -e \":*)",
-      "mcp__plugin_figma_figma__get_screenshot"
+      "mcp__plugin_figma_figma__get_screenshot",
+      "mcp__plugin_figma_figma__get_design_context",
+      "Bash(python3 -c \"import json,sys; data=json.load\\(sys.stdin\\); [print\\(item[''text''][:3000]\\) for item in data if item.get\\(''type''\\)==''text'']\")"
     ]
   }
 }

@@ -31,7 +31,6 @@ const SUPPORT_NAV = [
 
 const PLACEHOLDER_ROUTES = [
   "/owner/payments",
-  "/owner/settings",
   "/owner/billings",
   "/owner/help",
 ];
@@ -118,15 +117,43 @@ export default function OwnerSidebar() {
             Support
           </p>
           <div className="space-y-0.5">
-            {SUPPORT_NAV.map((item) => (
-              <div
-                key={item.href}
-                className="flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-sm font-medium text-slate-400 dark:text-slate-600 cursor-not-allowed"
-              >
-                <item.icon className="h-[18px] w-[18px] shrink-0" />
-                {item.label}
-              </div>
-            ))}
+            {SUPPORT_NAV.map((item) => {
+              const active = isActive(item.href);
+              const placeholder = PLACEHOLDER_ROUTES.includes(item.href);
+
+              if (placeholder) {
+                return (
+                  <div
+                    key={item.href}
+                    className="flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-sm font-medium text-slate-400 dark:text-slate-600 cursor-not-allowed"
+                  >
+                    <item.icon className="h-[18px] w-[18px] shrink-0" />
+                    {item.label}
+                  </div>
+                );
+              }
+
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={cn(
+                    "flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors",
+                    active
+                      ? "bg-indigo-600 text-white shadow-sm"
+                      : "text-slate-600 dark:text-slate-400 hover:bg-indigo-50 dark:hover:bg-indigo-950/60 hover:text-indigo-700 dark:hover:text-indigo-300"
+                  )}
+                >
+                  <item.icon
+                    className={cn(
+                      "h-[18px] w-[18px] shrink-0",
+                      active ? "text-white" : "text-slate-500 dark:text-slate-500"
+                    )}
+                  />
+                  {item.label}
+                </Link>
+              );
+            })}
           </div>
         </div>
       </nav>
