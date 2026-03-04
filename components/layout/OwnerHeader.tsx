@@ -1,11 +1,9 @@
 "use client";
 
+import { Bell, ChevronDown, MapPin, Moon, User, LogOut } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { Bell, ChevronDown, User, LogOut, MapPin, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import {
   Popover,
@@ -21,35 +19,27 @@ export default function OwnerHeader() {
   const router = useRouter();
 
   return (
-    <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-6 shadow-sm">
+    <header className="sticky top-0 z-30 flex h-[79px] items-center justify-between border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-8">
       {/* Left: Gym Branding */}
       <div className="flex items-center gap-3">
-        <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-indigo-600 shrink-0">
-          <span className="text-base font-black text-white">F</span>
+        {/* Colorful gym logo */}
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-violet-500 via-pink-500 to-orange-400 text-white font-bold text-sm">
+          mfb
         </div>
         <div>
           <p className="text-sm font-bold text-slate-900 dark:text-slate-100 leading-tight">
-            Iron Forge Gym
+            Maxburn Fitness
           </p>
           <p className="text-xs text-slate-500 dark:text-slate-400 flex items-center gap-0.5 leading-tight">
             <MapPin className="h-3 w-3 shrink-0" />
-            San Francisco, CA
+            Dharmapuri, Tamil Nadu
           </p>
         </div>
       </div>
 
-      {/* Right: Search + Actions */}
+      {/* Right: Actions */}
       <div className="flex items-center gap-1">
-        {/* Search */}
-        <div className="relative hidden sm:block mr-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
-          <Input
-            placeholder="Search members..."
-            className="h-8 w-52 rounded-lg pl-8 text-xs bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700"
-          />
-        </div>
-
-        {/* Theme Toggle */}
+        {/* Dark Mode Toggle */}
         <ThemeToggle />
 
         {/* Notification Bell */}
@@ -65,9 +55,7 @@ export default function OwnerHeader() {
                 <Bell className="h-5 w-5" />
               </Button>
               {INITIAL_UNREAD > 0 && (
-                <Badge className="pointer-events-none absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-indigo-600 p-0 text-[10px] hover:bg-indigo-600">
-                  {INITIAL_UNREAD}
-                </Badge>
+                <span className="pointer-events-none absolute -right-0.5 -top-0.5 flex h-2.5 w-2.5 items-center justify-center rounded-full bg-red-500" />
               )}
             </div>
           </PopoverTrigger>
@@ -85,14 +73,14 @@ export default function OwnerHeader() {
               className="flex items-center gap-2.5 rounded-xl px-3 py-1.5 transition-colors hover:bg-slate-100 dark:hover:bg-slate-800"
             >
               <Avatar className="h-8 w-8">
-                <AvatarFallback className="text-xs">JD</AvatarFallback>
+                <AvatarFallback className="bg-indigo-600 text-white text-xs font-bold">S</AvatarFallback>
               </Avatar>
               <div className="hidden text-left sm:block">
-                <p className="text-sm font-semibold text-slate-900 dark:text-slate-100">
-                  Jordan Davis
+                <p className="text-sm font-semibold text-slate-900 dark:text-slate-100 leading-tight">
+                  Suriya
                 </p>
-                <p className="text-xs text-slate-500 dark:text-slate-400">
-                  Gym Owner
+                <p className="text-xs text-slate-500 dark:text-slate-400 leading-tight">
+                  Founder
                 </p>
               </div>
               <ChevronDown className="h-4 w-4 text-slate-400 dark:text-slate-500" />
@@ -100,12 +88,8 @@ export default function OwnerHeader() {
           </PopoverTrigger>
           <PopoverContent align="end" sideOffset={8} className="w-48 p-1.5">
             <div className="px-2 py-1.5 mb-1">
-              <p className="text-xs font-semibold text-slate-900 dark:text-slate-100">
-                Jordan Davis
-              </p>
-              <p className="text-[11px] text-slate-500 dark:text-slate-400">
-                jordan@ironforge.com
-              </p>
+              <p className="text-xs font-semibold text-slate-900 dark:text-slate-100">Suriya</p>
+              <p className="text-[11px] text-slate-500 dark:text-slate-400">Founder · Maxburn Fitness</p>
             </div>
             <Separator className="mb-1" />
             <button

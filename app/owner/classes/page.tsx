@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Plus, Search, LayoutList, Calendar } from "lucide-react";
+import { Plus, Search, LayoutList, Calendar, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import ClassTable from "@/components/owner/classes/ClassTable";
@@ -11,6 +11,7 @@ import type { GymClassStatus } from "@/lib/owner-data";
 import { cn } from "@/lib/utils";
 
 type FilterStatus = "all" | GymClassStatus;
+type ViewMode = "list" | "week";
 
 const STATUS_FILTERS: { label: string; value: FilterStatus }[] = [
   { label: "All", value: "all" },
@@ -20,13 +21,42 @@ const STATUS_FILTERS: { label: string; value: FilterStatus }[] = [
   { label: "Cancelled", value: "cancelled" },
 ];
 
-type ViewMode = "list" | "week";
+const DAY_NAMES = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
+
+function getWeekDates(baseMonday: Date): Date[] {
+  return DAY_NAMES.map((_, i) => {
+    const d = new Date(baseMonday);
+    d.setDate(baseMonday.getDate() + i);
+    return d;
+  });
+}
+
+function getMondayOfWeek(date: Date): Date {
+  const d = new Date(date);
+  const day = d.getDay();
+  const diff = day === 0 ? -6 : 1 - day;
+  d.setDate(d.getDate() + diff);
+  d.setHours(0, 0, 0, 0);
+  return d;
+}
+
+function fmtMonth(dates: Date[]): string {
+  const months = Array.from(new Set(dates.map((d) => d.toLocaleString("default", { month: "long", year: "numeric" }))));
+  return months.join(" / ");
+}
 
 export default function ClassesPage() {
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState<FilterStatus>("all");
   const [viewMode, setViewMode] = useState<ViewMode>("list");
   const [dialogOpen, setDialogOpen] = useState(false);
+
+  const today = new Date();
+  const [weekStart, setWeekStart] = useState<Date>(getMondayOfWeek(today));
+  const weekDates = getWeekDates(weekStart);
+
+  const todayNum = today.toDateString();
+  const [selectedDay, setSelectedDay] = useState<string>(today.toDateString());
 
   const filtered = MOCK_GYM_CLASSES.filter((c) => {
     const matchesSearch =
@@ -88,6 +118,77 @@ export default function ClassesPage() {
         </div>
       </div>
 
+      {/* Calendar Week Picker — always visible */}
+      <div className="rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-sm p-4">
+        {/* Month + nav */}
+        <div className="flex items-center justify-between mb-3">
+          <span className="text-sm font-semibold text-slate-700 dark:text-slate-300">
+            {fmtMonth(weekDates)}
+          </span>
+          <div className="flex items-center gap-1">
+            <button
+              type="button"
+              onClick={() => {
+                const prev = new Date(weekStart);
+                prev.setDate(prev.getDate() - 7);
+                setWeekStart(prev);
+              }}
+              className="flex h-7 w-7 items-center justify-center rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-slate-500"
+            >
+              <ChevronLeft className="h-4 w-4" />
+            </button>
+            <button
+              type="button"
+              onClick={() => setWeekStart(getMondayOfWeek(today))}
+              className="px-2.5 py-1 rounded-md text-xs font-medium text-indigo-600 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-950/40 transition-colors"
+            >
+              Today
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                const next = new Date(weekStart);
+                next.setDate(next.getDate() + 7);
+                setWeekStart(next);
+              }}
+              className="flex h-7 w-7 items-center justify-center rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-slate-500"
+            >
+              <ChevronRight className="h-4 w-4" />
+            </button>
+          </div>
+        </div>
+
+        {/* Day pills */}
+        <div className="grid grid-cols-7 gap-1.5">
+          {weekDates.map((date, i) => {
+            const isToday = date.toDateString() === todayNum;
+            const isSelected = date.toDateString() === selectedDay;
+            return (
+              <button
+                key={i}
+                type="button"
+                onClick={() => setSelectedDay(date.toDateString())}
+                className={cn(
+                  "flex flex-col items-center gap-0.5 rounded-xl py-2 px-1 transition-colors",
+                  isSelected
+                    ? "bg-indigo-600 text-white"
+                    : isToday
+                    ? "bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400"
+                    : "hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400"
+                )}
+              >
+                <span className="text-[10px] font-semibold uppercase tracking-wide">
+                  {DAY_NAMES[i]}
+                </span>
+                <span className={cn("text-sm font-bold", isSelected ? "text-white" : "")}>
+                  {date.getDate()}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
       {/* Filters Row */}
       <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center justify-between">
         {/* Search */}
@@ -129,7 +230,7 @@ export default function ClassesPage() {
       {/* List View */}
       {viewMode === "list" && <ClassTable classes={filtered} />}
 
-      {/* Week View Placeholder */}
+      {/* Week View */}
       {viewMode === "week" && (
         <div className="rounded-2xl border border-dashed border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-sm flex items-center justify-center py-24 text-center">
           <div>
