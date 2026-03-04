@@ -2,7 +2,7 @@
 
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, DollarSign, Pencil, Snowflake, XCircle } from "lucide-react";
+import { ChevronRight, DollarSign, Pencil, Snowflake } from "lucide-react";
 import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -65,14 +65,18 @@ export default function MemberDetailPage({ params }: Props) {
 
   return (
     <div className="space-y-6">
-      {/* Back link */}
-      <Link
-        href="/owner/members"
-        className="inline-flex items-center gap-1.5 text-sm text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
-      >
-        <ArrowLeft className="h-4 w-4" />
-        Back to Members
-      </Link>
+      {/* Breadcrumb */}
+      <nav className="flex items-center gap-1.5 text-sm text-slate-500 dark:text-slate-400">
+        <Link href="/owner/dashboard" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
+          GymFlow
+        </Link>
+        <ChevronRight className="h-3.5 w-3.5 shrink-0" />
+        <Link href="/owner/members" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
+          Members
+        </Link>
+        <ChevronRight className="h-3.5 w-3.5 shrink-0" />
+        <span className="text-slate-900 dark:text-slate-100 font-medium">{member.name}</span>
+      </nav>
 
       {/* Member Header Card */}
       <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm p-6">
@@ -91,9 +95,10 @@ export default function MemberDetailPage({ params }: Props) {
               <StatusBadge status={member.paymentStatus} />
             </div>
             <div className="flex items-center gap-2 flex-wrap">
-              <span className="rounded-full bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 px-2.5 py-0.5 text-xs font-medium">
+              <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">
                 {member.plan}
               </span>
+              <span className="text-slate-300 dark:text-slate-600">·</span>
               <span className="text-xs text-slate-500 dark:text-slate-400">
                 Expires {member.expiryDate}
               </span>
@@ -144,10 +149,9 @@ export default function MemberDetailPage({ params }: Props) {
           </Button>
           <Button
             size="sm"
-            className="gap-1.5 bg-red-600 hover:bg-red-700 text-white"
+            className="bg-red-600 hover:bg-red-700 text-white"
             onClick={() => toast.error("Membership cancellation requested")}
           >
-            <XCircle className="h-3.5 w-3.5" />
             Cancel
           </Button>
         </div>

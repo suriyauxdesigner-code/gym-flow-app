@@ -1,7 +1,7 @@
 "use client";
 
 import { toast } from "sonner";
-import { Download, FileText, Mail, Phone, User, Calendar, RefreshCw } from "lucide-react";
+import { Download, FileText, Mail, Phone, User, Calendar, UserCog } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -40,8 +40,8 @@ const PLAN_FEES: Record<string, string> = {
 function InfoItem({ icon: Icon, label, value }: { icon: React.ElementType; label: string; value: string }) {
   return (
     <div className="flex items-start gap-3 py-3 border-b border-slate-100 dark:border-slate-800 last:border-0">
-      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-indigo-50 dark:bg-indigo-950/40">
-        <Icon className="h-4 w-4 text-indigo-600 dark:text-indigo-400" />
+      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-indigo-100 dark:bg-indigo-900/40">
+        <Icon className="h-6 w-6 text-indigo-600 dark:text-indigo-400" />
       </div>
       <div>
         <p className="text-[10px] font-semibold uppercase tracking-widest text-slate-400">
@@ -77,7 +77,7 @@ export default function MemberTabs({
 
   return (
     <Tabs defaultValue="overview" className="space-y-5">
-      <TabsList className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-1 rounded-xl h-auto gap-0.5">
+      <TabsList className="bg-slate-100 dark:bg-slate-800 p-1 rounded-xl h-auto gap-0.5">
         {[
           { value: "overview", label: "Overview" },
           { value: "payments", label: "Payments" },
@@ -87,7 +87,7 @@ export default function MemberTabs({
           <TabsTrigger
             key={tab.value}
             value={tab.value}
-            className="rounded-lg px-4 py-2 text-sm font-medium data-[state=active]:bg-indigo-600 data-[state=active]:text-white data-[state=active]:shadow-sm"
+            className="rounded-lg px-4 py-2 text-sm font-medium data-[state=active]:bg-white dark:data-[state=active]:bg-slate-900 data-[state=active]:text-indigo-600 data-[state=active]:shadow-sm"
           >
             {tab.label}
           </TabsTrigger>
@@ -143,7 +143,7 @@ export default function MemberTabs({
                   size="sm"
                   onClick={() => toast.info("Reassign trainer coming soon")}
                 >
-                  <RefreshCw className="h-3.5 w-3.5" />
+                  <UserCog className="h-3.5 w-3.5" />
                   Reassign Trainer
                 </Button>
               </CardContent>
@@ -162,7 +162,7 @@ export default function MemberTabs({
                     <p className="text-[10px] font-semibold uppercase tracking-widest text-slate-400">
                       Joined Date
                     </p>
-                    <p className="text-sm font-medium text-slate-900 dark:text-slate-100 mt-1">
+                    <p className="text-base font-medium text-slate-900 dark:text-slate-100 mt-1">
                       {member.joinDate}
                     </p>
                   </div>
@@ -170,7 +170,7 @@ export default function MemberTabs({
                     <p className="text-[10px] font-semibold uppercase tracking-widest text-slate-400">
                       Expiry Date
                     </p>
-                    <p className="text-sm font-medium text-slate-900 dark:text-slate-100 mt-1">
+                    <p className="text-base font-medium text-slate-900 dark:text-slate-100 mt-1">
                       {member.expiryDate}
                     </p>
                   </div>
@@ -180,7 +180,7 @@ export default function MemberTabs({
                     <p className="text-[10px] font-semibold uppercase tracking-widest text-slate-400">
                       Amount
                     </p>
-                    <p className="text-sm font-medium text-slate-900 dark:text-slate-100 mt-1">
+                    <p className="text-base font-medium text-slate-900 dark:text-slate-100 mt-1">
                       {PLAN_FEES[member.plan] ?? "₹1,800.00 / Month"}
                     </p>
                   </div>
@@ -209,27 +209,27 @@ export default function MemberTabs({
               <CardContent className="pt-0 space-y-4">
                 {/* 3 stat boxes */}
                 <div className="grid grid-cols-3 gap-3">
-                  <div className="rounded-xl border border-slate-100 dark:border-slate-800 p-3 text-center">
-                    <p className="text-xl font-bold text-slate-900 dark:text-slate-100">
+                  <div className="rounded-xl bg-slate-100 dark:bg-slate-800 p-3 text-center">
+                    <p className="text-2xl font-bold text-slate-900 dark:text-slate-100">
                       {attendance.length}
                     </p>
                     <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
                       Total Visits
                     </p>
                   </div>
-                  <div className="rounded-xl border border-indigo-100 dark:border-indigo-900/40 bg-indigo-50/50 dark:bg-indigo-950/20 p-3 text-center">
-                    <p className="text-xl font-bold text-indigo-600 dark:text-indigo-400">
+                  <div className="rounded-xl bg-indigo-100 dark:bg-indigo-900/40 p-3 text-center">
+                    <p className="text-2xl font-bold text-indigo-600 dark:text-indigo-400">
                       {thisMonthCount}
                     </p>
-                    <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
+                    <p className="text-[11px] text-indigo-500 dark:text-indigo-400 mt-0.5">
                       This Month
                     </p>
                   </div>
-                  <div className="rounded-xl border border-emerald-100 dark:border-emerald-900/40 bg-emerald-50/50 dark:bg-emerald-950/20 p-3 text-center">
-                    <p className="text-xl font-bold text-emerald-600 dark:text-emerald-400">
+                  <div className="rounded-xl bg-emerald-100 dark:bg-emerald-900/40 p-3 text-center">
+                    <p className="text-2xl font-bold text-emerald-600 dark:text-emerald-400">
                       {member.attendanceRate}%
                     </p>
-                    <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
+                    <p className="text-[11px] text-emerald-600 dark:text-emerald-400 mt-0.5">
                       Attendance
                     </p>
                   </div>
@@ -249,7 +249,7 @@ export default function MemberTabs({
                   </div>
                 </div>
 
-                {/* Monthly Trend placeholder chart */}
+                {/* Monthly Trend sparkline */}
                 <div>
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-xs text-slate-600 dark:text-slate-400">Monthly Trend</span>
@@ -257,14 +257,34 @@ export default function MemberTabs({
                       3 Months
                     </span>
                   </div>
-                  <div className="h-16 w-full rounded-xl bg-slate-50 dark:bg-slate-800/50 flex items-end px-3 pb-2 gap-1">
-                    {[40, 55, 35, 65, 80, 70, 90].map((h, i) => (
-                      <div
-                        key={i}
-                        className="flex-1 rounded-t-sm bg-indigo-200 dark:bg-indigo-900/60"
-                        style={{ height: `${h}%` }}
+                  <div className="rounded-xl bg-slate-50 dark:bg-slate-800/50 px-3 pt-2 pb-1">
+                    <svg viewBox="0 0 300 64" height="64" width="100%" preserveAspectRatio="none">
+                      <defs>
+                        <linearGradient id="trendGrad" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="0%" stopColor="#6366f1" stopOpacity="0.18" />
+                          <stop offset="100%" stopColor="#6366f1" stopOpacity="0" />
+                        </linearGradient>
+                      </defs>
+                      <path
+                        d="M 0,44 C 50,44 100,20 150,20 C 200,20 250,8 300,8 L 300,64 L 0,64 Z"
+                        fill="url(#trendGrad)"
                       />
-                    ))}
+                      <path
+                        d="M 0,44 C 50,44 100,20 150,20 C 200,20 250,8 300,8"
+                        fill="none"
+                        stroke="#6366f1"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                      />
+                      {[{ cx: 0, cy: 44 }, { cx: 150, cy: 20 }, { cx: 300, cy: 8 }].map((pt, i) => (
+                        <circle key={i} cx={pt.cx} cy={pt.cy} r="3" fill="#6366f1" />
+                      ))}
+                    </svg>
+                    <div className="flex justify-between px-0.5 mt-1">
+                      {["Aug", "Sep", "Oct"].map((m) => (
+                        <span key={m} className="text-[10px] text-slate-400">{m}</span>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </CardContent>
@@ -282,7 +302,7 @@ export default function MemberTabs({
                   <span className="text-sm text-slate-600 dark:text-slate-400">Amount Due</span>
                   <span
                     className={cn(
-                      "text-2xl font-bold",
+                      "text-3xl font-bold",
                       member.balance > 0 ? "text-red-600" : "text-emerald-600"
                     )}
                   >
